@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Stack, router } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import appStorage from '../src/services/storage';
-import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
+import { ThemeProvider, DarkTheme, DefaultTheme } from 'expo-router';
 
 import { store } from '../src/store/store';
 import { setupInterceptors } from '../src/api/interceptors';

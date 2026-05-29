@@ -1,17 +1,23 @@
-import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
-import { PlatformPressable } from '@react-navigation/elements';
+// SDK 56: @react-navigation/bottom-tabs and @react-navigation/elements are no longer
+// direct dependencies. Using React Native's Pressable as a compatible replacement.
 import * as Haptics from 'expo-haptics';
+import { Pressable, type GestureResponderEvent, type PressableProps } from 'react-native';
 
-export function HapticTab(props: BottomTabBarButtonProps) {
+// Props compatible with expo-router's tab bar button interface
+type HapticTabProps = PressableProps & {
+  children?: React.ReactNode;
+};
+
+export function HapticTab({ onPressIn, ...props }: HapticTabProps) {
   return (
-    <PlatformPressable
+    <Pressable
       {...props}
-      onPressIn={(ev) => {
+      onPressIn={(ev: GestureResponderEvent) => {
         if (process.env.EXPO_OS === 'ios') {
           // Add a soft haptic feedback when pressing down on the tabs.
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }
-        props.onPressIn?.(ev);
+        onPressIn?.(ev);
       }}
     />
   );

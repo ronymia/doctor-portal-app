@@ -10,7 +10,7 @@ import {
 
 import AppText from "@/src/components/common/AppText";
 import { useModal } from "@/src/contexts/ModalContext";
-import AdminForm from "@/src/screens/admin/components/AdminForm";
+import AdminForm from "@/src/screens/admin/AdminForm";
 
 export default function GlobalFormModal() {
   const { modalState, closeModal } = useModal();

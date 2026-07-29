@@ -20,7 +20,7 @@ import {
 import { COLORS } from "@/src/theme/theme";
 
 // ADMIN ADMINS — FULLY SELF-CONTAINED SCREEN (SUPER ADMIN ONLY)
-function AdminAdmins() {
+export default function AllAdmins() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const theme = isDark ? COLORS.dark : COLORS.light;
@@ -235,5 +235,3 @@ function AdminAdmins() {
     </AdminScreenLayout>
   );
 }
-
-export default AdminAdmins;

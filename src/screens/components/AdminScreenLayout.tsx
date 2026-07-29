@@ -9,7 +9,7 @@ import ScreenWrapper from "@/src/components/common/ScreenWrapper";
 import { TAdminRoute } from "@/src/constants";
 import { useAdminScreen } from "@/src/hooks/useAdminScreen";
 import { useTheme } from "@/src/hooks/useTheme";
-import AdminSidebar from "./AdminSidebar";
+import AdminSidebar from "../../layouts/AdminSidebar";
 
 interface IAdminScreenLayoutProps {
   /** The route path of the current screen, for sidebar active highlight */

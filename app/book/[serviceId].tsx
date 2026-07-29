@@ -1,8 +1,7 @@
-import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import BookingScreen from '../../src/screens/BookingScreen';
+import { useLocalSearchParams } from "expo-router";
+import BookingScreen from "../../src/screens/appointment/BookingScreen";
 
 export default function BookingPage() {
   const { serviceId } = useLocalSearchParams<{ serviceId: string }>();
-  return <BookingScreen availableServiceId={serviceId || ''} />;
+  return <BookingScreen availableServiceId={serviceId || ""} />;
 }

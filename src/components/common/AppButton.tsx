@@ -1,35 +1,34 @@
-import React, { useRef } from 'react';
+import { useTheme } from "@/src/hooks/useTheme";
+import React, { useState } from "react";
 import {
-  Pressable,
-  Animated,
   ActivityIndicator,
-  useColorScheme,
+  Animated,
+  Pressable,
   ViewStyle,
-} from 'react-native';
-import AppText from './AppText';
+} from "react-native";
+import AppText from "./AppText";
 
-interface AppButtonProps {
+interface IAppButtonProps {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline' | 'text';
+  variant?: "primary" | "secondary" | "outline" | "text";
   loading?: boolean;
   disabled?: boolean;
   style?: ViewStyle;
   icon?: React.ReactNode;
 }
 
-export const AppButton: React.FC<AppButtonProps> = ({
+export default function AppButton({
   title,
   onPress,
-  variant = 'primary',
+  variant = "primary",
   loading = false,
   disabled = false,
   style,
   icon,
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const scaleAnim = useRef(new Animated.Value(1)).current;
+}: IAppButtonProps) {
+  const { colors } = useTheme();
+  const [scaleAnim] = useState(() => new Animated.Value(1));
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -51,17 +50,17 @@ export const AppButton: React.FC<AppButtonProps> = ({
 
   const getButtonClass = () => {
     const base =
-      'h-[52px] rounded-md justify-center items-center px-5 flex-row shadow-sm';
-    const opacity = disabled || loading ? 'opacity-60' : '';
+      "h-[52px] rounded-md justify-center items-center px-5 flex-row shadow-sm";
+    const opacity = disabled || loading ? "opacity-60" : "";
 
     switch (variant) {
-      case 'primary':
+      case "primary":
         return `${base} bg-brand-primary dark:bg-dark-primary ${opacity}`;
-      case 'secondary':
+      case "secondary":
         return `${base} bg-brand-accent dark:bg-dark-accent ${opacity}`;
-      case 'outline':
+      case "outline":
         return `${base} bg-transparent border-[1.5px] border-brand-primary dark:border-dark-primary ${opacity}`;
-      case 'text':
+      case "text":
         return `${base} bg-transparent shadow-none py-2 ${opacity}`;
       default:
         return `${base} bg-brand-primary dark:bg-dark-primary ${opacity}`;
@@ -70,23 +69,19 @@ export const AppButton: React.FC<AppButtonProps> = ({
 
   const getTextColor = () => {
     switch (variant) {
-      case 'primary':
-      case 'secondary':
-        return '#FFFFFF';
-      case 'outline':
-      case 'text':
-        return isDark ? '#14B8A6' : '#0F766E';
+      case "primary":
+      case "secondary":
+        return "#FFFFFF";
+      case "outline":
+      case "text":
+        return colors.primary;
       default:
-        return '#FFFFFF';
+        return "#FFFFFF";
     }
   };
 
   const spinnerColor =
-    variant === 'outline' || variant === 'text'
-      ? isDark
-        ? '#14B8A6'
-        : '#0F766E'
-      : '#FFFFFF';
+    variant === "outline" || variant === "text" ? colors.primary : "#FFFFFF";
 
   return (
     <Animated.View style={[{ transform: [{ scale: scaleAnim }] }, style]}>
@@ -100,9 +95,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
           <ActivityIndicator size="small" color={spinnerColor} />
         ) : (
           <Animated.View className="flex-row items-center justify-center">
-            {icon && (
-              <Animated.View className="mr-2">{icon}</Animated.View>
-            )}
+            {icon && <Animated.View className="mr-2">{icon}</Animated.View>}
             <AppText weight="semibold" color={getTextColor()}>
               {title}
             </AppText>
@@ -111,6 +104,4 @@ export const AppButton: React.FC<AppButtonProps> = ({
       </Pressable>
     </Animated.View>
   );
-};
-
-export default AppButton;
+}

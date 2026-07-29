@@ -1,3 +1,22 @@
+const colors = require('./src/theme/colors.json');
+
+const mapThemeToTailwind = (theme) => ({
+  background: theme.background,
+  surface: theme.surface,
+  border: theme.surfaceBorder,
+  text: theme.text,
+  'text-secondary': theme.textSecondary,
+  'text-muted': theme.textMuted,
+  primary: theme.primary,
+  'primary-light': theme.primaryLight,
+  'primary-dark': theme.primaryDark,
+  accent: theme.accent,
+  'accent-light': theme.accentLight,
+  success: theme.success,
+  warning: theme.warning,
+  error: theme.error,
+});
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NativeWind v4 content paths
@@ -11,40 +30,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Light theme tokens
-        brand: {
-          background: '#F8FAFC',
-          surface: '#FFFFFF',
-          border: '#E2E8F0',
-          text: '#0F172A',
-          'text-secondary': '#475569',
-          'text-muted': '#94A3B8',
-          primary: '#0F766E',
-          'primary-light': '#CCFBF1',
-          'primary-dark': '#115E59',
-          accent: '#3B82F6',
-          'accent-light': '#DBEAFE',
-          success: '#10B981',
-          warning: '#F59E0B',
-          error: '#EF4444',
-        },
-        // Dark theme tokens (used via dark: prefix)
-        dark: {
-          background: '#0B0F19',
-          surface: '#151D30',
-          border: '#222F4C',
-          text: '#F8FAFC',
-          'text-secondary': '#94A3B8',
-          'text-muted': '#64748B',
-          primary: '#14B8A6',
-          'primary-light': '#115E59',
-          'primary-dark': '#0D9488',
-          accent: '#60A5FA',
-          'accent-light': '#1E3A8A',
-          success: '#34D399',
-          warning: '#FBBF24',
-          error: '#F87171',
-        },
+        brand: mapThemeToTailwind(colors.light),
+        dark: mapThemeToTailwind(colors.dark),
       },
       spacing: {
         xs: '4px',

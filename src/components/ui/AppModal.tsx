@@ -1,32 +1,32 @@
-import React from 'react';
+import { X } from "lucide-react-native";
+import React from "react";
 import {
   Modal as RNModal,
-  View,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useColorScheme,
-} from 'react-native';
-import { X } from 'lucide-react-native';
-import AppText from '../common/AppText';
+  View,
+} from "react-native";
+import AppText from "@/src/components/common/AppText";
 
-interface AppModalProps {
+interface IAppModalProps {
   visible: boolean;
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
 }
 
-export const AppModal: React.FC<AppModalProps> = ({
+export const AppModal: React.FC<IAppModalProps> = ({
   visible,
   onClose,
   title,
   children,
 }) => {
   const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const surfaceBg = isDark ? '#151D30' : '#FFFFFF';
-  const borderColor = isDark ? '#222F4C' : '#E2E8F0';
-  const closeIconColor = isDark ? '#94A3B8' : '#475569';
+  const isDark = colorScheme === "dark";
+  const surfaceBg = isDark ? "#151D30" : "#FFFFFF";
+  const borderColor = isDark ? "#222F4C" : "#E2E8F0";
+  const closeIconColor = isDark ? "#94A3B8" : "#475569";
 
   return (
     <RNModal
@@ -51,7 +51,7 @@ export const AppModal: React.FC<AppModalProps> = ({
               style={{ borderBottomColor: borderColor }}
             >
               <AppText weight="bold" style={{ fontSize: 16 }}>
-                {title || ''}
+                {title || ""}
               </AppText>
               <TouchableOpacity onPress={onClose} className="p-1">
                 <X size={20} color={closeIconColor} />

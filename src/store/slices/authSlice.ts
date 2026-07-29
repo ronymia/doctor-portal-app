@@ -1,20 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import appStorage from '../../services/storage';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import appStorage from "@/src/services/storage";
 
-export interface UserProfile {
+export interface IUserProfile {
   fullName: string;
   profilePicture?: string | null;
   address?: string;
   dateOfBirth?: string;
-  gender?: 'MALE' | 'FEMALE' | 'OTHER';
+  gender?: "MALE" | "FEMALE" | "OTHER";
 }
 
-export interface UserDetails {
+export interface IUserDetails {
   id: string;
   email: string;
   phoneNumber: string;
-  role: 'super_admin' | 'admin' | 'doctor' | 'patient';
-  profile?: UserProfile;
+  role: "SUPER_ADMIN" | "ADMIN" | "DOCTOR" | "PATIENT";
+  permissions: string[];
+  profile?: IUserProfile;
   patient?: {
     id: string;
     patientId: string;
@@ -28,14 +29,14 @@ export interface UserDetails {
   } | null;
 }
 
-interface AuthState {
+interface IAuthState {
   token: string | null;
-  user: UserDetails | null;
+  user: IUserDetails | null;
   isAuthenticated: boolean;
   isRestoring: boolean;
 }
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   token: null,
   user: null,
   isAuthenticated: false,
@@ -43,12 +44,12 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ token: string; user: UserDetails }>
+      action: PayloadAction<{ token: string; user: IUserDetails }>,
     ) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
@@ -56,16 +57,20 @@ const authSlice = createSlice({
       state.isRestoring = false;
 
       // Save token and user details to storage in async manner
-      appStorage.setItem('auth_token', action.payload.token).catch(() => {});
-      appStorage.setItem('auth_user', JSON.stringify(action.payload.user)).catch(() => {});
+      appStorage.setItem("auth_token", action.payload.token).catch(() => {});
+      appStorage
+        .setItem("auth_user", JSON.stringify(action.payload.user))
+        .catch(() => {});
     },
-    updateUserProfile: (state, action: PayloadAction<UserProfile>) => {
+    updateUserProfile: (state, action: PayloadAction<IUserProfile>) => {
       if (state.user) {
         state.user.profile = {
           ...state.user.profile,
           ...action.payload,
         };
-        appStorage.setItem('auth_user', JSON.stringify(state.user)).catch(() => {});
+        appStorage
+          .setItem("auth_user", JSON.stringify(state.user))
+          .catch(() => {});
       }
     },
     logout: (state) => {
@@ -74,17 +79,22 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isRestoring = false;
 
-      appStorage.removeItem('auth_token').catch(() => {});
-      appStorage.removeItem('auth_user').catch(() => {});
+      appStorage.removeItem("auth_token").catch(() => {});
+      appStorage.removeItem("auth_user").catch(() => {});
     },
     setRestoring: (state, action: PayloadAction<boolean>) => {
       state.isRestoring = action.payload;
     },
   },
+  extraReducers(builder) {},
 });
 
-export const { setCredentials, updateUserProfile, logout, setRestoring } = authSlice.actions;
+export const { setCredentials, updateUserProfile, logout, setRestoring } =
+  authSlice.actions;
 export default authSlice.reducer;
-export const selectCurrentUser = (state: { auth: AuthState }) => state.auth.user;
-export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
-export const selectIsRestoring = (state: { auth: AuthState }) => state.auth.isRestoring;
+export const selectCurrentUser = (state: { auth: IAuthState }) =>
+  state.auth.user;
+export const selectIsAuthenticated = (state: { auth: IAuthState }) =>
+  state.auth.isAuthenticated;
+export const selectIsRestoring = (state: { auth: IAuthState }) =>
+  state.auth.isRestoring;

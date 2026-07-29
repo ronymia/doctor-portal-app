@@ -12,14 +12,11 @@
 //  All existing RTK Query hooks and cache tags are unchanged.
 // ─────────────────────────────────────────────────────────────
 
-import {
-  BaseQueryFn,
-  createApi,
-} from '@reduxjs/toolkit/query/react';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { BaseQueryFn, createApi } from "@reduxjs/toolkit/query/react";
+import { AxiosError, AxiosRequestConfig } from "axios";
 
-import { axiosClient, isFormData } from '../../api/client';
-import type { RtkApiError } from '../../api/types';
+import { axiosClient } from "@/src/api/client";
+import type { IRtkApiError } from "@/src/api/types";
 
 // ─── axiosBaseQuery ──────────────────────────────────────────
 
@@ -46,7 +43,7 @@ export const axiosBaseQuery: BaseQueryFn<
   // args shape (mirrors what endpoint query() functions return)
   {
     url: string;
-    method?: AxiosRequestConfig['method'];
+    method?: AxiosRequestConfig["method"];
     body?: unknown;
     params?: Record<string, unknown>;
     headers?: Record<string, string>;
@@ -54,8 +51,8 @@ export const axiosBaseQuery: BaseQueryFn<
   // result type (unknown — endpoints type their own responses)
   unknown,
   // error type
-  RtkApiError
-> = async ({ url, method = 'GET', body, params, headers }) => {
+  IRtkApiError
+> = async ({ url, method = "GET", body, params, headers }) => {
   try {
     const response = await axiosClient({
       url,
@@ -67,7 +64,6 @@ export const axiosBaseQuery: BaseQueryFn<
     });
 
     return { data: response.data };
-
   } catch (axiosError) {
     const err = axiosError as AxiosError;
 
@@ -76,39 +72,38 @@ export const axiosBaseQuery: BaseQueryFn<
       return {
         error: {
           status: err.response.status,
-          data:
-            (err.response.data as any) ?? {
-              message: err.message,
-            },
-        } satisfies RtkApiError,
+          data: (err.response.data as any) ?? {
+            message: err.message,
+          },
+        } satisfies IRtkApiError,
       };
     }
 
     // Network / timeout error (no response received)
     const status =
-      err.code === 'ECONNABORTED' ? 'TIMEOUT_ERROR' : 'FETCH_ERROR';
+      err.code === "ECONNABORTED" ? "TIMEOUT_ERROR" : "FETCH_ERROR";
 
     return {
       error: {
         status,
         data: { message: err.message },
-      } satisfies RtkApiError,
+      } satisfies IRtkApiError,
     };
   }
 };
 
 // ─── RTK Query API root ──────────────────────────────────────
 
-export const baseApi = createApi({
-  reducerPath: 'api',
+const baseApi = createApi({
+  reducerPath: "api",
   baseQuery: axiosBaseQuery,
   tagTypes: [
-    'User',
-    'Doctor',
-    'Appointment',
-    'Specialization',
-    'Service',
-    'TimeSlot',
+    "User",
+    "Doctor",
+    "Appointment",
+    "Specialization",
+    "Service",
+    "TimeSlot",
   ],
   endpoints: () => ({}),
 });

@@ -1,45 +1,46 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, useColorScheme, FlatList, Modal, SafeAreaView } from 'react-native';
-import { Controller, Control, RegisterOptions } from 'react-hook-form';
-import { ChevronDown, X } from 'lucide-react-native';
-import AppText from '../common/AppText';
+import AppText from "@/src/components/common/AppText";
+import { useTheme } from "@/src/hooks/useTheme";
+import { ChevronDown, X } from "lucide-react-native";
+import React, { useState } from "react";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { FlatList, Modal, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-interface Option {
+interface IOption {
   label: string;
   value: string | number;
 }
 
-interface AppSelectProps {
+interface IAppSelectProps {
   name: string;
   control: any;
-  options: Option[];
+  options: IOption[];
   label?: string;
   placeholder?: string;
   rules?: RegisterOptions;
   icon?: React.ReactNode;
 }
 
-export const AppSelect: React.FC<AppSelectProps> = ({
+export default function AppSelect({
   name,
   control,
   options,
   label,
-  placeholder = 'Select option',
+  placeholder = "Select option",
   rules,
   icon,
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+}: IAppSelectProps) {
+  const { colors } = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const surfaceBg = isDark ? '#151D30' : '#FFFFFF';
-  const bgColor = isDark ? '#0B0F19' : '#F8FAFC';
-  const chevronColor = isDark ? '#94A3B8' : '#475569';
-  const closeIconColor = isDark ? '#F8FAFC' : '#0F172A';
-  const primaryLight = isDark ? '#115E59' : '#CCFBF1';
-  const primaryColor = isDark ? '#14B8A6' : '#0F766E';
-  const borderColor = isDark ? '#222F4C' : '#E2E8F0';
-  const errorColor = isDark ? '#F87171' : '#EF4444';
+  const surfaceBg = colors.surface;
+  const bgColor = colors.background;
+  const chevronColor = colors.textSecondary;
+  const closeIconColor = colors.text;
+  const primaryLight = colors.primaryLight;
+  const primaryColor = colors.primary;
+  const borderColor = colors.surfaceBorder;
+  const errorColor = colors.error;
 
   return (
     <Controller
@@ -61,11 +62,24 @@ export const AppSelect: React.FC<AppSelectProps> = ({
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
               className="h-[52px] border-[1.5px] rounded-md flex-row items-center justify-between px-3"
-              style={{ backgroundColor: surfaceBg, borderColor: selectBorderColor }}
+              style={{
+                backgroundColor: surfaceBg,
+                borderColor: selectBorderColor,
+              }}
             >
               <View className="flex-row items-center">
-                {icon && <View className="mr-2 justify-center items-center">{icon}</View>}
-                <AppText color={selectedOption ? (isDark ? '#F8FAFC' : '#0F172A') : (isDark ? '#64748B' : '#94A3B8')}>
+                {icon && (
+                  <View className="mr-2 justify-center items-center">
+                    {icon}
+                  </View>
+                )}
+                <AppText
+                  className={
+                    !selectedOption
+                      ? "text-brand-text-muted dark:text-dark-text-muted"
+                      : ""
+                  }
+                >
                   {selectedOption ? selectedOption.label : placeholder}
                 </AppText>
               </View>
@@ -74,7 +88,7 @@ export const AppSelect: React.FC<AppSelectProps> = ({
 
             {error && (
               <AppText variant="error" className="mt-1">
-                {error.message || 'Required field'}
+                {error.message || "Required field"}
               </AppText>
             )}
 
@@ -119,13 +133,15 @@ export const AppSelect: React.FC<AppSelectProps> = ({
                           }}
                           className="py-4 px-5 border-b"
                           style={{
-                            backgroundColor: isSelected ? primaryLight : surfaceBg,
+                            backgroundColor: isSelected
+                              ? primaryLight
+                              : surfaceBg,
                             borderBottomColor: borderColor,
                           }}
                         >
                           <AppText
-                            weight={isSelected ? 'semibold' : 'regular'}
-                            color={isSelected ? primaryColor : (isDark ? '#F8FAFC' : '#0F172A')}
+                            weight={isSelected ? "semibold" : "regular"}
+                            color={isSelected ? primaryColor : undefined}
                           >
                             {item.label}
                           </AppText>
@@ -141,6 +157,4 @@ export const AppSelect: React.FC<AppSelectProps> = ({
       }}
     />
   );
-};
-
-export default AppSelect;
+}

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { View, TextInput, useColorScheme, TextInputProps } from 'react-native';
-import { Controller, Control, RegisterOptions } from 'react-hook-form';
-import AppText from '../common/AppText';
+import AppText from "@/src/components/common/AppText";
+import { useTheme } from "@/src/hooks/useTheme";
+import { useState } from "react";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { TextInput, TextInputProps, View } from "react-native";
 
-interface AppTextareaProps extends Omit<TextInputProps, 'onChangeText' | 'value' | 'multiline'> {
+interface IAppTextareaProps extends Omit<
+  TextInputProps,
+  "onChangeText" | "value" | "multiline"
+> {
   name: string;
   control: any;
   label?: string;
@@ -12,7 +16,7 @@ interface AppTextareaProps extends Omit<TextInputProps, 'onChangeText' | 'value'
   numberOfLines?: number;
 }
 
-export const AppTextarea: React.FC<AppTextareaProps> = ({
+export default function AppTextarea({
   name,
   control,
   label,
@@ -21,26 +25,28 @@ export const AppTextarea: React.FC<AppTextareaProps> = ({
   numberOfLines = 4,
   style,
   ...props
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+}: IAppTextareaProps) {
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
-  const textColor = isDark ? '#F8FAFC' : '#0F172A';
-  const placeholderColor = isDark ? '#64748B' : '#94A3B8';
-  const surfaceBg = isDark ? '#151D30' : '#FFFFFF';
+  const textColor = colors.text;
+  const placeholderColor = colors.textMuted;
+  const surfaceBg = colors.surface;
 
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
+      render={({
+        field: { onChange, onBlur, value },
+        fieldState: { error },
+      }) => {
         const borderColor = error
-          ? isDark ? '#F87171' : '#EF4444'
+          ? colors.error
           : isFocused
-          ? isDark ? '#14B8A6' : '#0F766E'
-          : isDark ? '#222F4C' : '#E2E8F0';
+            ? colors.primary
+            : colors.surfaceBorder;
 
         const areaHeight = numberOfLines * 24 + 20;
 
@@ -53,7 +59,11 @@ export const AppTextarea: React.FC<AppTextareaProps> = ({
             )}
             <View
               className="border-[1.5px] rounded-md px-3 py-2"
-              style={{ backgroundColor: surfaceBg, borderColor, height: areaHeight }}
+              style={{
+                backgroundColor: surfaceBg,
+                borderColor,
+                height: areaHeight,
+              }}
             >
               <TextInput
                 multiline
@@ -64,7 +74,7 @@ export const AppTextarea: React.FC<AppTextareaProps> = ({
                 }}
                 onFocus={() => setIsFocused(true)}
                 onChangeText={onChange}
-                value={value || ''}
+                value={value || ""}
                 placeholder={placeholder}
                 placeholderTextColor={placeholderColor}
                 textAlignVertical="top"
@@ -75,7 +85,7 @@ export const AppTextarea: React.FC<AppTextareaProps> = ({
             </View>
             {error && (
               <AppText variant="error" className="mt-1">
-                {error.message || 'Required field'}
+                {error.message || "Required field"}
               </AppText>
             )}
           </View>
@@ -83,6 +93,4 @@ export const AppTextarea: React.FC<AppTextareaProps> = ({
       }}
     />
   );
-};
-
-export default AppTextarea;
+}

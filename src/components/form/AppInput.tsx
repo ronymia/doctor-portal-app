@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { View, TextInput, useColorScheme, TextInputProps } from 'react-native';
-import { Controller, Control, RegisterOptions } from 'react-hook-form';
-import AppText from '../common/AppText';
+import AppText from "@/src/components/common/AppText";
+import { useTheme } from "@/src/hooks/useTheme";
+import React, { useState } from "react";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { TextInput, TextInputProps, View } from "react-native";
 
-interface AppInputProps extends Omit<TextInputProps, 'onChangeText' | 'value'> {
+interface IAppInputProps extends Omit<
+  TextInputProps,
+  "onChangeText" | "value"
+> {
   name: string;
   control: any;
   label?: string;
@@ -13,7 +17,7 @@ interface AppInputProps extends Omit<TextInputProps, 'onChangeText' | 'value'> {
   onChangeText?: (text: string) => void;
 }
 
-export const AppInput: React.FC<AppInputProps> = ({
+export default function AppInput({
   name,
   control,
   label,
@@ -21,28 +25,30 @@ export const AppInput: React.FC<AppInputProps> = ({
   rules,
   icon,
   style,
-  keyboardType = 'default',
+  keyboardType = "default",
   ...props
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+}: IAppInputProps) {
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
-  const textColor = isDark ? '#F8FAFC' : '#0F172A';
-  const placeholderColor = isDark ? '#64748B' : '#94A3B8';
-  const surfaceBg = isDark ? '#151D30' : '#FFFFFF';
+  const textColor = colors.text;
+  const placeholderColor = colors.textMuted;
+  const surfaceBg = colors.surface;
 
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
+      render={({
+        field: { onChange, onBlur, value },
+        fieldState: { error },
+      }) => {
         const borderColor = error
-          ? isDark ? '#F87171' : '#EF4444'
+          ? colors.error
           : isFocused
-          ? isDark ? '#14B8A6' : '#0F766E'
-          : isDark ? '#222F4C' : '#E2E8F0';
+            ? colors.primary
+            : colors.surfaceBorder;
 
         return (
           <View className="mb-3 w-full">
@@ -55,7 +61,9 @@ export const AppInput: React.FC<AppInputProps> = ({
               className="h-[52px] border-[1.5px] rounded-md flex-row items-center px-3"
               style={{ backgroundColor: surfaceBg, borderColor }}
             >
-              {icon && <View className="mr-2 justify-center items-center">{icon}</View>}
+              {icon && (
+                <View className="mr-2 justify-center items-center">{icon}</View>
+              )}
               <TextInput
                 onBlur={() => {
                   onBlur();
@@ -66,7 +74,7 @@ export const AppInput: React.FC<AppInputProps> = ({
                   onChange(text);
                   if (props.onChangeText) props.onChangeText(text);
                 }}
-                value={value || ''}
+                value={value || ""}
                 placeholder={placeholder}
                 placeholderTextColor={placeholderColor}
                 keyboardType={keyboardType}
@@ -77,7 +85,7 @@ export const AppInput: React.FC<AppInputProps> = ({
             </View>
             {error && (
               <AppText variant="error" className="mt-1">
-                {error.message || 'Required field'}
+                {error.message || "Required field"}
               </AppText>
             )}
           </View>
@@ -85,6 +93,4 @@ export const AppInput: React.FC<AppInputProps> = ({
       }}
     />
   );
-};
-
-export default AppInput;
+}

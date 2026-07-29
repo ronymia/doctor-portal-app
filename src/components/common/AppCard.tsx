@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, ViewStyle } from 'react-native';
+import React from "react";
+import { View, ViewStyle } from "react-native";
 
-interface AppCardProps {
+interface IAppCardProps {
   children: React.ReactNode;
   style?: ViewStyle;
   padding?: number;
@@ -9,7 +9,7 @@ interface AppCardProps {
   className?: string;
 }
 
-export const AppCard: React.FC<AppCardProps> = ({
+const AppCard: React.FC<IAppCardProps> = ({
   children,
   style,
   padding,
@@ -17,13 +17,15 @@ export const AppCard: React.FC<AppCardProps> = ({
   className,
 }) => {
   const baseClass = [
-    'rounded-md bg-white dark:bg-dark-surface',
-    'shadow-sm',
-    bordered ? 'border border-brand-border dark:border-dark-border' : 'border-0',
+    "rounded-md bg-white dark:bg-dark-surface",
+    "shadow-sm",
+    bordered
+      ? "border border-brand-border dark:border-dark-border"
+      : "border-0",
     className,
   ]
     .filter(Boolean)
-    .join(' ');
+    .join(" ");
 
   // Padding can be passed as a number for dynamic values
   const inlineStyle: ViewStyle = {};

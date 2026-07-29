@@ -5,8 +5,8 @@
 export { axiosClient, isFormData } from './client';
 export { setupInterceptors } from './interceptors';
 export type {
-  ApiResponse,
-  ApiErrorBody,
-  RtkApiError,
-  RefreshTokenResponse,
+  IApiResponse,
+  IApiErrorBody,
+  IRtkApiError,
+  IRefreshTokenResponse,
 } from './types';

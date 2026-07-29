@@ -5,8 +5,8 @@
 //  the store can be injected without circular-import issues.
 // ─────────────────────────────────────────────────────────────
 
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { API_BASE_URL } from '../constants';
+import { create, AxiosInstance } from "axios";
+import { API_BASE_URL } from "@/src/constants";
 
 /**
  * The single shared Axios instance used throughout the app.
@@ -20,12 +20,12 @@ import { API_BASE_URL } from '../constants';
  *       Always go through the RTK Query hooks (useXxxQuery / useXxxMutation).
  *       The axiosBaseQuery in baseApi.ts uses this client internally.
  */
-export const axiosClient: AxiosInstance = axios.create({
+export const axiosClient: AxiosInstance = create({
   baseURL: API_BASE_URL,
   timeout: 15_000,
   headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
+    "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });
 
@@ -36,10 +36,7 @@ export const axiosClient: AxiosInstance = axios.create({
  * multipart/form-data boundary automatically.
  */
 export function isFormData(value: unknown): value is FormData {
-  return (
-    typeof FormData !== 'undefined' &&
-    value instanceof FormData
-  );
+  return typeof FormData !== "undefined" && value instanceof FormData;
 }
 
 export default axiosClient;

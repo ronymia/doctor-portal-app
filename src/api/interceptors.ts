@@ -22,21 +22,21 @@ import axios, {
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { ENDPOINTS } from '../constants';
-import { logout, setCredentials } from '../store/slices/authSlice';
-import appStorage from '../services/storage';
+import { ENDPOINTS } from '@/src/constants';
+import { logout, setCredentials } from '@/src/store/slices/authSlice';
+import appStorage from '@/src/services/storage';
 import { axiosClient, isFormData } from './client';
-import type { RefreshTokenResponse } from './types';
+import type { IRefreshTokenResponse } from './types';
 
 // ─── Types ───────────────────────────────────────────────────
 
 /** Lazy reference to the Redux store — set by setupInterceptors(). */
-type StoreRef = {
+type TStoreRef = {
   getState: () => { auth: { token: string | null; user: any } };
   dispatch: (action: any) => void;
 };
 
-interface QueuedRequest {
+interface IQueuedRequest {
   resolve: (token: string) => void;
   reject: (error: unknown) => void;
 }
@@ -50,7 +50,7 @@ let isRefreshing = false;
  * Requests that arrived with a 401 while a refresh was already running.
  * Each entry is resolved/rejected once the refresh completes.
  */
-let pendingQueue: QueuedRequest[] = [];
+let pendingQueue: IQueuedRequest[] = [];
 
 /**
  * Flush the pending queue.
@@ -75,11 +75,11 @@ function flushQueue(error: unknown, token: string | null): void {
  *
  * @example
  *   // app/_layout.tsx
- *   import { store } from '../src/store/store';
- *   import { setupInterceptors } from '../src/api/interceptors';
+ *   import { store } from '@/src/src/store/store';
+ *   import { setupInterceptors } from '@/src/src/api/interceptors';
  *   setupInterceptors(store);
  */
-export function setupInterceptors(store: StoreRef): void {
+export function setupInterceptors(store: TStoreRef): void {
 
   // ── REQUEST interceptor ──────────────────────────────────
   axiosClient.interceptors.request.use(
@@ -152,7 +152,7 @@ export function setupInterceptors(store: StoreRef): void {
 
         // Call refresh endpoint — uses a plain axios call (not the
         // intercepted client) to avoid recursive 401 loops.
-        const refreshResponse = await axios.post<RefreshTokenResponse>(
+        const refreshResponse = await axios.post<IRefreshTokenResponse>(
           `${axiosClient.defaults.baseURL}${ENDPOINTS.refreshToken}`,
           {},
           {

@@ -3,12 +3,12 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable, type GestureResponderEvent, type PressableProps } from 'react-native';
 
-// Props compatible with expo-router's tab bar button interface
-type HapticTabProps = PressableProps & {
+// TProps compatible with expo-router's tab bar button interface
+type THapticTabProps = PressableProps & {
   children?: React.ReactNode;
 };
 
-export function HapticTab({ onPressIn, ...props }: HapticTabProps) {
+export function HapticTab({ onPressIn, ...props }: THapticTabProps) {
   return (
     <Pressable
       {...props}

@@ -6,8 +6,8 @@ import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
 // SymbolViewProps['name'] is a complex union in SDK 55+, use string as key type
-type IconMapping = Record<string, ComponentProps<typeof MaterialIcons>['name']>;
-type IconSymbolName = keyof typeof MAPPING;
+type TIconMapping = Record<string, ComponentProps<typeof MaterialIcons>['name']>;
+type TIconSymbolName = keyof typeof MAPPING;
 
 /**
  * Add your SF Symbols to Material Icons mappings here.
@@ -19,7 +19,7 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-} as IconMapping;
+} as TIconMapping;
 
 /**
  * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
@@ -32,7 +32,7 @@ export function IconSymbol({
   color,
   style,
 }: {
-  name: IconSymbolName;
+  name: TIconSymbolName;
   size?: number;
   color: string | OpaqueColorValue;
   style?: StyleProp<TextStyle>;

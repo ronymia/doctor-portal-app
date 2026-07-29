@@ -1,16 +1,16 @@
+import AppText from "@/src/components/common/AppText";
+import { useTheme } from "@/src/hooks/useTheme";
 import { Eye, EyeOff, Lock } from "lucide-react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Controller, RegisterOptions } from "react-hook-form";
 import {
   TextInput,
   TextInputProps,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from "react-native";
-import AppText from "../common/AppText";
 
-interface AppPasswordInputProps extends Omit<
+interface IAppPasswordInputProps extends Omit<
   TextInputProps,
   "onChangeText" | "value" | "secureTextEntry"
 > {
@@ -21,7 +21,7 @@ interface AppPasswordInputProps extends Omit<
   rules?: RegisterOptions;
 }
 
-export const AppPasswordInput: React.FC<AppPasswordInputProps> = ({
+export default function AppPasswordInput({
   name,
   control,
   label,
@@ -29,17 +29,16 @@ export const AppPasswordInput: React.FC<AppPasswordInputProps> = ({
   rules,
   style,
   ...props
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
+}: IAppPasswordInputProps) {
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
   const [isSecure, setIsSecure] = useState(true);
 
-  const textColor = isDark ? "#F8FAFC" : "#0F172A";
-  const placeholderColor = isDark ? "#64748B" : "#94A3B8";
-  const surfaceBg = isDark ? "#151D30" : "#FFFFFF";
-  const iconColor = isDark ? "#64748B" : "#94A3B8";
-  const toggleIconColor = isDark ? "#94A3B8" : "#475569";
+  const textColor = colors.text;
+  const placeholderColor = colors.textMuted;
+  const surfaceBg = colors.surface;
+  const iconColor = colors.textMuted;
+  const toggleIconColor = colors.textSecondary;
 
   return (
     <Controller
@@ -51,16 +50,10 @@ export const AppPasswordInput: React.FC<AppPasswordInputProps> = ({
         fieldState: { error },
       }) => {
         const borderColor = error
-          ? isDark
-            ? "#F87171"
-            : "#EF4444"
+          ? colors.error
           : isFocused
-            ? isDark
-              ? "#14B8A6"
-              : "#0F766E"
-            : isDark
-              ? "#222F4C"
-              : "#E2E8F0";
+            ? colors.primary
+            : colors.surfaceBorder;
 
         return (
           <View className="mb-3 w-full">
@@ -112,6 +105,4 @@ export const AppPasswordInput: React.FC<AppPasswordInputProps> = ({
       }}
     />
   );
-};
-
-export default AppPasswordInput;
+}

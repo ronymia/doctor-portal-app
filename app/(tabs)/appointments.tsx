@@ -1,5 +1,4 @@
-import React from 'react';
-import AppointmentsScreen from '../../src/screens/AppointmentsScreen';
+import AppointmentsScreen from "../../src/screens/appointment/AppointmentsScreen";
 
 export default function AppointmentsPage() {
   return <AppointmentsScreen />;

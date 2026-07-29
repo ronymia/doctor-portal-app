@@ -1,12 +1,11 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { useColorScheme } from 'react-native';
-import { Home, Calendar, User } from 'lucide-react-native';
-import { COLORS } from '../../src/theme/theme';
+import { Tabs } from "expo-router";
+import { Calendar, Home, User } from "lucide-react-native";
+import { useColorScheme } from "react-native";
+import { COLORS } from "../../src/theme/theme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? COLORS.dark : COLORS.light;
+  const theme = colorScheme === "dark" ? COLORS.dark : COLORS.light;
 
   return (
     <Tabs
@@ -28,21 +27,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: "Home",
           tabBarIcon: ({ color }) => <Home size={22} color={color} />,
         }}
       />
       <Tabs.Screen
         name="appointments"
         options={{
-          title: 'Visits',
+          title: "Visits",
           tabBarIcon: ({ color }) => <Calendar size={22} color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: ({ color }) => <User size={22} color={color} />,
         }}
       />

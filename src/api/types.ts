@@ -9,7 +9,7 @@
  * @example
  *   { success: true, message: "OK", data: { id: "..." } }
  */
-export interface ApiResponse<T = unknown> {
+export interface IApiResponse<T = unknown> {
   success: boolean;
   message?: string;
   data: T;
@@ -23,7 +23,7 @@ export interface ApiResponse<T = unknown> {
 /**
  * Shape of the error body the server sends back on 4xx / 5xx.
  */
-export interface ApiErrorBody {
+export interface IApiErrorBody {
   success: false;
   message: string;
   errors?: Record<string, string[]>;
@@ -35,16 +35,16 @@ export interface ApiErrorBody {
  * Components can type-narrow on `status` to distinguish HTTP errors
  * from network/timeout errors.
  */
-export interface RtkApiError {
+export interface IRtkApiError {
   /** HTTP status code, or 'FETCH_ERROR' / 'TIMEOUT_ERROR' / 'PARSING_ERROR' */
   status: number | 'FETCH_ERROR' | 'TIMEOUT_ERROR' | 'PARSING_ERROR';
-  data: ApiErrorBody | { message: string };
+  data: IApiErrorBody | { message: string };
 }
 
 /**
  * Decoded token response from the refresh-token endpoint.
  */
-export interface RefreshTokenResponse {
+export interface IRefreshTokenResponse {
   success: boolean;
   data: {
     access_token: string;

@@ -1,24 +1,23 @@
-import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { router } from 'expo-router';
-import { ChevronLeft } from 'lucide-react-native';
-import { useColorScheme } from 'react-native';
-import AppText from './AppText';
+import { router } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
+import React from "react";
+import { TouchableOpacity, useColorScheme, View } from "react-native";
+import AppText from "./AppText";
 
-interface AppHeaderProps {
+interface IAppHeaderProps {
   title: string;
   showBackButton?: boolean;
   rightAction?: React.ReactNode;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({
+const AppHeader: React.FC<IAppHeaderProps> = ({
   title,
   showBackButton = true,
   rightAction,
 }) => {
   const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const iconColor = isDark ? '#F8FAFC' : '#0F172A';
+  const isDark = colorScheme === "dark";
+  const iconColor = isDark ? "#F8FAFC" : "#0F172A";
 
   return (
     <View className="h-14 flex-row items-center justify-between px-4 border-b border-brand-border dark:border-dark-border">
@@ -36,15 +35,18 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
       {/* Center */}
       <View className="flex-1 items-center">
-        <AppText weight="bold" variant="subtitle" align="center" style={{ fontSize: 16 }}>
+        <AppText
+          weight="bold"
+          variant="subtitle"
+          align="center"
+          style={{ fontSize: 16 }}
+        >
           {title}
         </AppText>
       </View>
 
       {/* Right */}
-      <View className="w-10 items-end">
-        {rightAction || <View />}
-      </View>
+      <View className="w-10 items-end">{rightAction || <View />}</View>
     </View>
   );
 };

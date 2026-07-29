@@ -1,17 +1,18 @@
-import React from 'react';
+import { useTheme } from "@/src/hooks/useTheme";
+import React from "react";
 import {
   KeyboardAvoidingView,
-  ScrollView,
   Platform,
-  View,
   RefreshControl,
-  useColorScheme,
+  ScrollView,
   StatusBar,
-  SafeAreaView,
-} from 'react-native';
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-interface ScreenWrapperProps {
+interface IScreenWrapperProps {
   children: React.ReactNode;
+  header?: React.ReactNode;
   scrollable?: boolean;
   onRefresh?: () => void;
   refreshing?: boolean;
@@ -19,18 +20,18 @@ interface ScreenWrapperProps {
   padding?: number;
 }
 
-export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
+export default function ScreenWrapper({
   children,
+  header,
   scrollable = true,
   onRefresh,
   refreshing = false,
   useSafeArea = true,
   padding,
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const primaryColor = isDark ? '#14B8A6' : '#0F766E';
-  const bgColor = isDark ? '#0B0F19' : '#F8FAFC';
+}: IScreenWrapperProps) {
+  const { colors, isDark } = useTheme();
+  const primaryColor = colors.primary;
+  const bgColor = colors.background;
 
   const contentPadding = padding !== undefined ? { padding } : { padding: 0 };
 
@@ -69,20 +70,19 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   return (
     <View className="flex-1" style={{ backgroundColor: bgColor }}>
       <StatusBar
-        barStyle={isDark ? 'light-content' : 'dark-content'}
+        barStyle={isDark ? "light-content" : "dark-content"}
         backgroundColor={bgColor}
-        translucent={Platform.OS === 'android'}
+        translucent={Platform.OS === "android"}
       />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
         <WrapperComponent className="flex-1">
+          {header}
           {renderContent()}
         </WrapperComponent>
       </KeyboardAvoidingView>
     </View>
   );
-};
-
-export default ScreenWrapper;
+}

@@ -1,26 +1,25 @@
-import React from 'react';
-import { View, TouchableOpacity, useColorScheme } from 'react-native';
-import { Controller, Control, RegisterOptions } from 'react-hook-form';
-import { Check } from 'lucide-react-native';
-import AppText from '../common/AppText';
+import AppText from "@/src/components/common/AppText";
+import { useTheme } from "@/src/hooks/useTheme";
+import { Check } from "lucide-react-native";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { TouchableOpacity, View } from "react-native";
 
-interface AppCheckboxProps {
+interface IAppCheckboxProps {
   name: string;
   control: any;
   label: string;
   rules?: RegisterOptions;
 }
 
-export const AppCheckbox: React.FC<AppCheckboxProps> = ({
+export default function AppCheckbox({
   name,
   control,
   label,
   rules,
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const primaryColor = isDark ? '#14B8A6' : '#0F766E';
-  const errorColor = isDark ? '#F87171' : '#EF4444';
+}: IAppCheckboxProps) {
+  const { colors } = useTheme();
+  const primaryColor = colors.primary;
+  const errorColor = colors.error;
 
   return (
     <Controller
@@ -38,7 +37,7 @@ export const AppCheckbox: React.FC<AppCheckboxProps> = ({
               className="w-[22px] h-[22px] rounded-[4px] border-2 justify-center items-center mr-2"
               style={{
                 borderColor: error ? errorColor : primaryColor,
-                backgroundColor: value ? primaryColor : 'transparent',
+                backgroundColor: value ? primaryColor : "transparent",
               }}
             >
               {value && <Check size={14} color="#FFFFFF" strokeWidth={3} />}
@@ -49,13 +48,11 @@ export const AppCheckbox: React.FC<AppCheckboxProps> = ({
           </TouchableOpacity>
           {error && (
             <AppText variant="error" className="mt-1 ml-[30px]">
-              {error.message || 'Required field'}
+              {error.message || "Required field"}
             </AppText>
           )}
         </View>
       )}
     />
   );
-};
-
-export default AppCheckbox;
+}

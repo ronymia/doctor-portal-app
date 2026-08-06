@@ -1,10 +1,9 @@
 import AppText from "@/src/components/common/AppText";
 import { useTheme } from "@/src/hooks/useTheme";
-import { ChevronDown, X } from "lucide-react-native";
 import React, { useState } from "react";
 import { Controller, RegisterOptions } from "react-hook-form";
-import { FlatList, Modal, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 
 interface IOption {
   label: string;
@@ -19,6 +18,8 @@ interface IAppSelectProps {
   placeholder?: string;
   rules?: RegisterOptions;
   icon?: React.ReactNode;
+  zIndex?: number;
+  zIndexInverse?: number;
 }
 
 export default function AppSelect({
@@ -29,16 +30,14 @@ export default function AppSelect({
   placeholder = "Select option",
   rules,
   icon,
+  zIndex = 3000,
+  zIndexInverse = 1000,
 }: IAppSelectProps) {
-  const { colors } = useTheme();
-  const [modalVisible, setModalVisible] = useState(false);
+  const { colors, isDark } = useTheme();
+  const [open, setOpen] = useState(false);
 
   const surfaceBg = colors.surface;
-  const bgColor = colors.background;
   const chevronColor = colors.textSecondary;
-  const closeIconColor = colors.text;
-  const primaryLight = colors.primaryLight;
-  const primaryColor = colors.primary;
   const borderColor = colors.surfaceBorder;
   const errorColor = colors.error;
 
@@ -48,110 +47,91 @@ export default function AppSelect({
       name={name}
       rules={rules}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
-        const selectedOption = options.find((opt) => opt.value === value);
         const selectBorderColor = error ? errorColor : borderColor;
 
         return (
-          <View className="mb-3 w-full">
+          <View className="mb-3 w-full" style={{ zIndex }}>
             {label && (
               <AppText weight="medium" variant="label" className="mb-1">
                 {label}
               </AppText>
             )}
 
-            <TouchableOpacity
-              onPress={() => setModalVisible(true)}
-              className="h-[52px] border-[1.5px] rounded-md flex-row items-center justify-between px-3"
-              style={{
-                backgroundColor: surfaceBg,
-                borderColor: selectBorderColor,
-              }}
-            >
-              <View className="flex-row items-center">
-                {icon && (
-                  <View className="mr-2 justify-center items-center">
-                    {icon}
-                  </View>
-                )}
-                <AppText
-                  className={
-                    !selectedOption
-                      ? "text-brand-text-muted dark:text-dark-text-muted"
-                      : ""
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={options}
+                setOpen={setOpen}
+                setValue={(val) => {
+                  const newValue = typeof val === "function" ? val(value) : val;
+                  // Allow deselection if the same value is tapped
+                  if (newValue === value) {
+                    onChange("");
+                  } else {
+                    onChange(newValue);
                   }
+                }}
+                setItems={() => {}}
+                placeholder={placeholder}
+                theme={isDark ? "DARK" : "LIGHT"}
+                listMode="SCROLLVIEW"
+                zIndex={zIndex}
+                zIndexInverse={zIndexInverse}
+                style={{
+                  backgroundColor: surfaceBg,
+                  borderColor: selectBorderColor,
+                  borderWidth: 1.5,
+                  minHeight: 52,
+                  borderRadius: 6,
+                  paddingLeft: icon ? 40 : 12,
+                }}
+                dropDownContainerStyle={{
+                  backgroundColor: surfaceBg,
+                  borderColor: borderColor,
+                  borderWidth: 1.5,
+                }}
+                textStyle={{
+                  color: colors.text,
+                }}
+                placeholderStyle={{
+                  color: colors.textMuted,
+                }}
+                arrowIconStyle={{
+                  tintColor: chevronColor,
+                }}
+                tickIconStyle={{
+                  tintColor: colors.primary,
+                }}
+                selectedItemContainerStyle={{
+                  backgroundColor: colors.primary + "15", // Light tint of primary color
+                }}
+                selectedItemLabelStyle={{
+                  color: colors.primary,
+                  fontWeight: "bold",
+                }}
+              />
+              {icon && (
+                <View
+                  style={{
+                    position: "absolute",
+                    left: 12,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: zIndex + 1,
+                  }}
+                  pointerEvents="none"
                 >
-                  {selectedOption ? selectedOption.label : placeholder}
-                </AppText>
-              </View>
-              <ChevronDown size={18} color={chevronColor} />
-            </TouchableOpacity>
+                  {icon}
+                </View>
+              )}
+            </View>
 
             {error && (
               <AppText variant="error" className="mt-1">
                 {error.message || "Required field"}
               </AppText>
             )}
-
-            {/* List Picker Modal */}
-            <Modal
-              visible={modalVisible}
-              transparent
-              animationType="slide"
-              onRequestClose={() => setModalVisible(false)}
-            >
-              <View className="flex-1 justify-end bg-black/50">
-                <SafeAreaView
-                  className="rounded-t-[20px] max-h-[60%] min-h-[30%] overflow-hidden"
-                  style={{ backgroundColor: bgColor }}
-                >
-                  <View
-                    className="flex-row items-center justify-between p-4 border-b"
-                    style={{ borderBottomColor: borderColor }}
-                  >
-                    <AppText weight="bold" variant="subtitle">
-                      {label || placeholder}
-                    </AppText>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible(false)}
-                      className="p-1"
-                    >
-                      <X size={20} color={closeIconColor} />
-                    </TouchableOpacity>
-                  </View>
-
-                  <FlatList
-                    data={options}
-                    keyExtractor={(item) => item.value.toString()}
-                    contentContainerStyle={{ paddingVertical: 8 }}
-                    renderItem={({ item }) => {
-                      const isSelected = item.value === value;
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            onChange(item.value);
-                            setModalVisible(false);
-                          }}
-                          className="py-4 px-5 border-b"
-                          style={{
-                            backgroundColor: isSelected
-                              ? primaryLight
-                              : surfaceBg,
-                            borderBottomColor: borderColor,
-                          }}
-                        >
-                          <AppText
-                            weight={isSelected ? "semibold" : "regular"}
-                            color={isSelected ? primaryColor : undefined}
-                          >
-                            {item.label}
-                          </AppText>
-                        </TouchableOpacity>
-                      );
-                    }}
-                  />
-                </SafeAreaView>
-              </View>
-            </Modal>
           </View>
         );
       }}

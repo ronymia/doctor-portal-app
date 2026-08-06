@@ -12,7 +12,7 @@ import {
   useFinishAppointmentMutation,
   useGetAppointmentsQuery,
   useStartAppointmentMutation,
-} from "@/src/store/api/appointmentApi";
+} from "@/src/store/api";
 import { useAppSelector } from "@/src/store/hooks";
 
 export default function AppointmentsScreen() {

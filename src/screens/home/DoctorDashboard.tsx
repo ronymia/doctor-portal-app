@@ -12,7 +12,7 @@ import AppCard from "@/src/components/common/AppCard";
 import AppText from "@/src/components/common/AppText";
 import ScreenWrapper from "@/src/components/common/ScreenWrapper";
 import { useTheme } from "@/src/hooks/useTheme";
-import { useGetAppointmentsQuery } from "@/src/store/api/appointmentApi";
+import { useGetAppointmentsQuery } from "@/src/store/api";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { logout } from "@/src/store/slices/authSlice";
 

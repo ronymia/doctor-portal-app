@@ -13,7 +13,7 @@ import AdminSidebar from "../../layouts/AdminSidebar";
 
 interface IAdminScreenLayoutProps {
   /** The route path of the current screen, for sidebar active highlight */
-  activeRoute: TAdminRoute;
+  activeRoute: any;
   /** Page title shown in the header next to the hamburger */
   title: string;
   /** Optional badge count shown next to title (e.g. pending doctors) */

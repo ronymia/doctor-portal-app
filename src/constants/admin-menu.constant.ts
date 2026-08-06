@@ -4,6 +4,7 @@ import {
   Stethoscope,
   UserCog,
   Users,
+  Award,
 } from "lucide-react-native";
 import React from "react";
 
@@ -14,7 +15,8 @@ export type TAdminRoute =
   | "/admin/doctors"
   | "/admin/patients"
   | "/admin/timeslots"
-  | "/admin/admins";
+  | "/admin/admins"
+  | "/admin/specialization";
 
 export interface ISidebarMenuItem {
   route: TAdminRoute;
@@ -44,6 +46,13 @@ export const ADMIN_MENU_ITEMS: ISidebarMenuItem[] = [
     label: "Time Slots",
     Icon: Clock,
     requiredPermission: PERMISSIONS.READ_TIMESLOTS,
+  },
+  {
+    route: "/admin/specialization",
+    label: "Specializations",
+    Icon: Award,
+    // Specializations can be seen by those who can read doctors
+    requiredPermission: PERMISSIONS.READ_DOCTORS,
   },
   {
     route: "/admin/admins",

@@ -1,3 +1,4 @@
+import AppText from "@/src/components/common/AppText";
 import { X } from "lucide-react-native";
 import React from "react";
 import {
@@ -7,7 +8,6 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import AppText from "@/src/components/common/AppText";
 
 interface IAppModalProps {
   visible: boolean;
@@ -16,7 +16,7 @@ interface IAppModalProps {
   children: React.ReactNode;
 }
 
-export const AppModal: React.FC<IAppModalProps> = ({
+const AppModal: React.FC<IAppModalProps> = ({
   visible,
   onClose,
   title,

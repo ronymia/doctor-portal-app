@@ -13,10 +13,7 @@ import EmptyState from "@/src/components/common/EmptyState";
 import { useModal } from "@/src/contexts/ModalContext";
 import { useAdminScreen } from "@/src/hooks/useAdminScreen";
 import AdminScreenLayout from "@/src/screens/components/AdminScreenLayout";
-import {
-  useDeleteAdminMutation,
-  useGetAdminsQuery,
-} from "@/src/store/api/adminApi";
+import { useDeleteAdminMutation, useGetAdminsQuery } from "@/src/store/api";
 import { COLORS } from "@/src/theme/theme";
 
 // ADMIN ADMINS — FULLY SELF-CONTAINED SCREEN (SUPER ADMIN ONLY)

@@ -1,8 +1,8 @@
-import { router } from "expo-router";
-import { useState } from "react";
+import { useGetUsersQuery } from "@/src/store/api";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { logout } from "@/src/store/slices/authSlice";
-import { useGetUsersQuery } from "@/src/store/api/adminApi";
+import { router } from "expo-router";
+import { useState } from "react";
 
 /**
  * SHARED HOOK FOR ALL ADMIN SCREENS

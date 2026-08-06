@@ -12,7 +12,7 @@ import AppInput from "@/src/components/form/AppInput";
 import AppPasswordInput from "@/src/components/form/AppPasswordInput";
 import { useTheme } from "@/src/hooks/useTheme";
 import { TLoginSchema, loginSchema } from "@/src/schemas";
-import { useLoginMutation } from "@/src/store/api/authApi";
+import { useLoginMutation } from "@/src/store/api";
 import { useAppDispatch } from "@/src/store/hooks";
 import { setCredentials } from "@/src/store/slices/authSlice";
 

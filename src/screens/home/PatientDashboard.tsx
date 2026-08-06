@@ -13,7 +13,7 @@ import { useTheme } from "@/src/hooks/useTheme";
 import {
   useGetAvailableDoctorsQuery,
   useGetSpecializationsQuery,
-} from "@/src/store/api/doctorApi";
+} from "@/src/store/api";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { logout } from "@/src/store/slices/authSlice";
 

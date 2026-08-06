@@ -2,7 +2,7 @@ import { createAdminSchema, updateAdminSchema } from "@/src/schemas";
 import { TAdminFormFields } from "@/src/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, MapPin, User } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, View } from "react-native";
 
@@ -18,7 +18,7 @@ import {
   useCreateAdminMutation,
   useGetAdminsQuery,
   useUpdateAdminMutation,
-} from "@/src/store/api/adminApi";
+} from "@/src/store/api";
 
 interface IAdminFormProps {
   adminId?: string;
@@ -64,18 +64,21 @@ export default function AdminForm({
   };
 
   // DERIVE VALUES FOR EDIT MODE
-  const formValues = isEditMode && adminToEdit ? {
-    email: adminToEdit.user?.email || "",
-    phoneNumber: adminToEdit.user?.phoneNumber?.replace("+880", "") || "",
-    password: "",
-    profile: {
-      fullName: adminToEdit.user?.profile?.fullName || "",
-      address: adminToEdit.user?.profile?.address || "",
-      dateOfBirth: adminToEdit.user?.profile?.dateOfBirth || "",
-      joiningDate: adminToEdit.user?.profile?.joiningDate || "",
-      gender: adminToEdit.user?.profile?.gender || "MALE",
-    },
-  } : undefined;
+  const formValues =
+    isEditMode && adminToEdit
+      ? {
+          email: adminToEdit.user?.email || "",
+          phoneNumber: adminToEdit.user?.phoneNumber?.replace("+880", "") || "",
+          password: "",
+          profile: {
+            fullName: adminToEdit.user?.profile?.fullName || "",
+            address: adminToEdit.user?.profile?.address || "",
+            dateOfBirth: adminToEdit.user?.profile?.dateOfBirth || "",
+            joiningDate: adminToEdit.user?.profile?.joiningDate || "",
+            gender: adminToEdit.user?.profile?.gender || "MALE",
+          },
+        }
+      : undefined;
 
   // FORM HANDLERS
   const { control, handleSubmit } = useForm<TAdminFormFields>({
@@ -149,7 +152,9 @@ export default function AdminForm({
         visible: true,
         type: "danger",
         title: "Error",
-        message: err?.data?.message || `Failed to ${isEditMode ? "update" : "create"} admin.`,
+        message:
+          err?.data?.message ||
+          `Failed to ${isEditMode ? "update" : "create"} admin.`,
       });
     }
   };

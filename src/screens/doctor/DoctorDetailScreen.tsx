@@ -15,7 +15,7 @@ import AppLoader from "@/src/components/common/AppLoader";
 import AppText from "@/src/components/common/AppText";
 import ScreenWrapper from "@/src/components/common/ScreenWrapper";
 import { useTheme } from "@/src/hooks/useTheme";
-import { useGetAvailableDoctorsQuery } from "@/src/store/api/doctorApi";
+import { useGetAvailableDoctorsQuery } from "@/src/store/api";
 
 interface IDoctorDetailScreenProps {
   id: string;

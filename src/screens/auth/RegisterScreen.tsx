@@ -15,7 +15,7 @@ import AppPhoneInput from "@/src/components/form/AppPhoneInput";
 import AppSelect from "@/src/components/form/AppSelect";
 import AppTextarea from "@/src/components/form/AppTextarea";
 import { useTheme } from "@/src/hooks/useTheme";
-import { useRegisterPatientMutation } from "@/src/store/api/authApi";
+import { useRegisterPatientMutation } from "@/src/store/api";
 
 const registerSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),

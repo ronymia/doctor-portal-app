@@ -12,7 +12,7 @@ import AdminScreenLayout from "@/src/screens/components/AdminScreenLayout";
 import {
   useCreateTimeSlotMutation,
   useGetTimeSlotsQuery,
-} from "@/src/store/api/adminApi";
+} from "@/src/store/api";
 
 // ADMIN TIME SLOTS — FULLY SELF-CONTAINED SCREEN
 export default function AdminTimeSlots() {

@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "@/src/constants";
-import baseApi from "./baseApi";
+import baseApi from "./base.api";
 
 export const adminApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

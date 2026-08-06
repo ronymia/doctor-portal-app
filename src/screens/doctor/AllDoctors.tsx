@@ -1,5 +1,12 @@
-import { Pencil, ShieldAlert, ShieldCheck, Trash2, UserCheck, XCircle } from "lucide-react-native";
-import React, { useState } from "react";
+import {
+  Pencil,
+  ShieldAlert,
+  ShieldCheck,
+  Trash2,
+  UserCheck,
+  XCircle,
+} from "lucide-react-native";
+import { useState } from "react";
 import { Image, TouchableOpacity, useColorScheme, View } from "react-native";
 
 import AppButton from "@/src/components/common/AppButton";
@@ -17,7 +24,7 @@ import {
   useRejectDoctorMutation,
   useSuspendUserMutation,
   useUnsuspendUserMutation,
-} from "@/src/store/api/adminApi";
+} from "@/src/store/api";
 import { COLORS } from "@/src/theme/theme";
 
 // ADMIN DOCTORS — FULLY SELF-CONTAINED SCREEN
@@ -31,7 +38,11 @@ export default function AllDoctors() {
   const warningColor = isDark ? "#FBBF24" : "#F59E0B";
   const errorColor = isDark ? "#F87171" : "#EF4444";
 
-  const { data: allUsersResponse, isLoading, refetch } = useGetUsersQuery({ role: "DOCTOR" });
+  const {
+    data: allUsersResponse,
+    isLoading,
+    refetch,
+  } = useGetUsersQuery({ role: "DOCTOR" });
   const doctors = allUsersResponse?.data || [];
 
   const [approveDoctor] = useApproveDoctorMutation();
@@ -44,7 +55,13 @@ export default function AllDoctors() {
   const [modalConfig, setModalConfig] = useState<{
     visible: boolean;
     type: "success" | "danger" | "info" | "warning";
-    actionType: "APPROVE_CONFIRM" | "REJECT_CONFIRM" | "SUSPEND_CONFIRM" | "UNSUSPEND_CONFIRM" | "DELETE_CONFIRM" | "INFO";
+    actionType:
+      | "APPROVE_CONFIRM"
+      | "REJECT_CONFIRM"
+      | "SUSPEND_CONFIRM"
+      | "UNSUSPEND_CONFIRM"
+      | "DELETE_CONFIRM"
+      | "INFO";
     title: string;
     message: string;
     targetId?: string | null;
@@ -57,8 +74,13 @@ export default function AllDoctors() {
   });
 
   const confirmAction = (
-    actionType: "APPROVE_CONFIRM" | "REJECT_CONFIRM" | "SUSPEND_CONFIRM" | "UNSUSPEND_CONFIRM" | "DELETE_CONFIRM",
-    id: string
+    actionType:
+      | "APPROVE_CONFIRM"
+      | "REJECT_CONFIRM"
+      | "SUSPEND_CONFIRM"
+      | "UNSUSPEND_CONFIRM"
+      | "DELETE_CONFIRM",
+    id: string,
   ) => {
     let title = "";
     let message = "";
@@ -78,11 +100,13 @@ export default function AllDoctors() {
       type = "warning";
     } else if (actionType === "UNSUSPEND_CONFIRM") {
       title = "Unsuspend Account";
-      message = "Are you sure you want to lift the suspension for this user's account?";
+      message =
+        "Are you sure you want to lift the suspension for this user's account?";
       type = "success";
     } else if (actionType === "DELETE_CONFIRM") {
       title = "Delete Doctor";
-      message = "Are you sure you want to permanently delete this doctor's account? This action cannot be undone.";
+      message =
+        "Are you sure you want to permanently delete this doctor's account? This action cannot be undone.";
       type = "danger";
     }
 
@@ -295,14 +319,18 @@ export default function AllDoctors() {
                       {isPending && (
                         <>
                           <TouchableOpacity
-                            onPress={() => confirmAction("APPROVE_CONFIRM", u.id)}
+                            onPress={() =>
+                              confirmAction("APPROVE_CONFIRM", u.id)
+                            }
                             className="w-9 h-9 rounded-full bg-teal-500/10 border border-teal-500/20 justify-center items-center"
                           >
                             <UserCheck size={16} color={successColor} />
                           </TouchableOpacity>
 
                           <TouchableOpacity
-                            onPress={() => confirmAction("REJECT_CONFIRM", u.id)}
+                            onPress={() =>
+                              confirmAction("REJECT_CONFIRM", u.id)
+                            }
                             className="w-9 h-9 rounded-full bg-red-500/10 border border-red-500/20 justify-center items-center"
                           >
                             <XCircle size={16} color={errorColor} />
@@ -320,7 +348,9 @@ export default function AllDoctors() {
 
                       {isSuspended && (
                         <TouchableOpacity
-                          onPress={() => confirmAction("UNSUSPEND_CONFIRM", u.id)}
+                          onPress={() =>
+                            confirmAction("UNSUSPEND_CONFIRM", u.id)
+                          }
                           className="w-9 h-9 rounded-full bg-teal-500/10 border border-teal-500/20 justify-center items-center"
                         >
                           <ShieldCheck size={16} color={successColor} />
@@ -328,7 +358,9 @@ export default function AllDoctors() {
                       )}
 
                       <TouchableOpacity
-                        onPress={() => openModal("EDIT_DOCTOR", { doctorId: u.id })}
+                        onPress={() =>
+                          openModal("EDIT_DOCTOR", { doctorId: u.id })
+                        }
                         className="w-9 h-9 rounded-full bg-teal-500/10 border border-teal-500/20 justify-center items-center"
                         style={{ marginLeft: 4 }}
                       >

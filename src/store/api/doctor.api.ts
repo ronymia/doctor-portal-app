@@ -1,16 +1,8 @@
 import { ENDPOINTS } from '@/src/constants';
-import baseApi from './baseApi';
+import baseApi from './base.api';
 
 export const doctorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getSpecializations: builder.query({
-      query: (params) => ({
-        url: ENDPOINTS.specializations,
-        method: 'GET',
-        params,
-      }),
-      providesTags: ['Specialization'],
-    }),
     getServices: builder.query({
       query: (params) => ({
         url: ENDPOINTS.services,
@@ -47,7 +39,6 @@ export const doctorApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetSpecializationsQuery,
   useGetServicesQuery,
   useGetAvailableDoctorsQuery,
   useGetAvailableServicesQuery,

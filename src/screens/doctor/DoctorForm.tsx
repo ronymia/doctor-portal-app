@@ -17,8 +17,8 @@ import {
   useCreateDoctorMutation,
   useGetUsersQuery,
   useUpdateDoctorMutation,
-} from "@/src/store/api/adminApi";
-import { useGetSpecializationsQuery } from "@/src/store/api/doctorApi";
+  useGetSpecializationsQuery
+} from "@/src/store/api";
 
 interface IDoctorFormProps {
   doctorId?: string;

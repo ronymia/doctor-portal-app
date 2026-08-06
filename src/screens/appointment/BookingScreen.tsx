@@ -16,8 +16,10 @@ import AppLoader from "@/src/components/common/AppLoader";
 import AppText from "@/src/components/common/AppText";
 import ScreenWrapper from "@/src/components/common/ScreenWrapper";
 import { useTheme } from "@/src/hooks/useTheme";
-import { useBookAppointmentMutation } from "@/src/store/api/appointmentApi";
-import { useGetAvailableServiceByIdQuery } from "@/src/store/api/doctorApi";
+import {
+  useBookAppointmentMutation,
+  useGetAvailableServiceByIdQuery,
+} from "@/src/store/api";
 import { useAppSelector } from "@/src/store/hooks";
 
 interface IBookingScreenProps {

@@ -12,7 +12,7 @@ import AppPasswordInput from "@/src/components/form/AppPasswordInput";
 import AppPhoneInput from "@/src/components/form/AppPhoneInput";
 import AppRadio from "@/src/components/form/AppRadio";
 import AppSelect from "@/src/components/form/AppSelect";
-import { doctorSchema, updateDoctorSchema, TDoctorFormFields, TUpdateDoctorFormFields } from "@/src/schemas";
+import { doctorSchema, updateDoctorSchema } from "@/src/schemas";
 import {
   useCreateDoctorMutation,
   useGetUsersQuery,
@@ -111,10 +111,8 @@ export default function DoctorForm({
       },
     },
   });
-  console.log({ isEditMode });
   // HANDLE SUBMIT
   const onSubmit = async (fields: any) => {
-    console.log({ fields });
     try {
       if (isEditMode) {
         const updatePayload = {
@@ -125,7 +123,6 @@ export default function DoctorForm({
           profile: fields.profile,
           doctor: fields.doctor,
         };
-        console.log({ updatePayload });
         const response = await updateDoctor({
           id: doctorId,
           ...updatePayload,

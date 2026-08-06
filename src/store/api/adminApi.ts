@@ -20,6 +20,29 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    createDoctor: builder.mutation({
+      query: (doctorData) => ({
+        url: "/v1.0/users/create-doctor",
+        method: "POST",
+        body: doctorData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    updateDoctor: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/v1.0/users/${id}/update-doctor`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    deleteDoctor: builder.mutation({
+      query: (id) => ({
+        url: `/v1.0/doctors/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
     updateAdmin: builder.mutation({
       query: ({ id, ...data }) => ({
         url: `/v1.0/admins/${id}`,
@@ -60,6 +83,13 @@ export const adminApi = baseApi.injectEndpoints({
     suspendUser: builder.mutation({
       query: (id) => ({
         url: `/v1.0/users/${id}/suspend-user`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    unsuspendUser: builder.mutation({
+      query: (id) => ({
+        url: `/v1.0/users/${id}/unsuspend-user`,
         method: "PATCH",
       }),
       invalidatesTags: ["User"],
@@ -121,9 +151,13 @@ export const {
   useUpdateAdminMutation,
   useDeleteAdminMutation,
   useGetUsersQuery,
+  useCreateDoctorMutation,
+  useUpdateDoctorMutation,
+  useDeleteDoctorMutation,
   useApproveDoctorMutation,
   useRejectDoctorMutation,
   useSuspendUserMutation,
+  useUnsuspendUserMutation,
   useGetTimeSlotsQuery,
   useCreateTimeSlotMutation,
   useGetPermissionsQuery,

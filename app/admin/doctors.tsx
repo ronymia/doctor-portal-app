@@ -1,6 +1,6 @@
-import AdminDoctors from "../../src/screens/doctor/AdminDoctors";
+import AllDoctors from "@/src/screens/doctor/AllDoctors";
 
 // ADMIN DOCTORS SCREEN
 export default function AdminDoctorsScreen() {
-  return <AdminDoctors />;
+  return <AllDoctors />;
 }

@@ -11,6 +11,7 @@ import {
 import AppText from "@/src/components/common/AppText";
 import { useModal } from "@/src/contexts/ModalContext";
 import AdminForm from "@/src/screens/admin/AdminForm";
+import DoctorForm from "@/src/screens/doctor/DoctorForm";
 
 export default function GlobalFormModal() {
   const { modalState, closeModal } = useModal();
@@ -50,8 +51,15 @@ export default function GlobalFormModal() {
             onSubmitSuccess={closeModal}
           />
         );
-      // case "CREATE_DOCTOR":
-      //   return <CreateDoctorForm data={modalState.data} onSubmitSuccess={closeModal} />;
+      case "CREATE_DOCTOR":
+        return <DoctorForm onSubmitSuccess={closeModal} />;
+      case "EDIT_DOCTOR":
+        return (
+          <DoctorForm
+            doctorId={modalState.data?.doctorId}
+            onSubmitSuccess={closeModal}
+          />
+        );
       default:
         return (
           <AppText align="center" className="py-10">

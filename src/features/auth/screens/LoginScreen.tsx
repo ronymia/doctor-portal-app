@@ -1,7 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
 
 import { useForm } from "react-hook-form";
 import { TouchableOpacity, View } from "react-native";
@@ -22,11 +22,6 @@ export default function LoginScreen() {
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const [login, { isLoading, error }] = useLoginMutation();
-
-  const primaryColor = colors.primary;
-  const primaryLight = colors.primaryLight;
-  const errorColor = colors.error;
-  const iconColor = colors.textMuted;
 
   // FORM HANDLERS
   const { control, handleSubmit } = useForm<TLoginSchema>({
@@ -66,12 +61,12 @@ export default function LoginScreen() {
         <View className="items-center mb-7">
           <View
             className="w-[72px] h-[72px] rounded-full justify-center items-center mb-3"
-            style={{ backgroundColor: primaryLight }}
+            style={{ backgroundColor: colors.primaryLight }}
           >
             <MaterialCommunityIcons
               name="stethoscope"
               size={36}
-              color={primaryColor}
+              color={colors.primary}
             />
           </View>
           <AppText
@@ -102,8 +97,8 @@ export default function LoginScreen() {
             <View
               className="p-3 rounded-md border mb-4"
               style={{
-                backgroundColor: errorColor + "15",
-                borderColor: errorColor,
+                backgroundColor: colors.error + "15",
+                borderColor: colors.error,
               }}
             >
               <AppText variant="error" weight="medium">
@@ -119,7 +114,7 @@ export default function LoginScreen() {
             placeholder="name@clinical.com"
             keyboardType="email-address"
             autoCapitalize="none"
-            icon={<Feather name="mail" size={18} color={iconColor} />}
+            icon={<Feather name="mail" size={18} color={colors.textMuted} />}
           />
 
           <AppPasswordInput
@@ -136,7 +131,7 @@ export default function LoginScreen() {
             <AppText
               variant="bodySecondary"
               weight="medium"
-              color={primaryColor}
+              color={colors.primary}
             >
               Forgot Password?
             </AppText>
@@ -154,7 +149,7 @@ export default function LoginScreen() {
         <View className="flex-row justify-center items-center mt-7">
           <AppText variant="bodySecondary">New to MedPortal? </AppText>
           <TouchableOpacity onPress={() => router.push("/register")}>
-            <AppText weight="bold" color={primaryColor}>
+            <AppText weight="bold" color={colors.primary}>
               Create Account
             </AppText>
           </TouchableOpacity>

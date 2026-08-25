@@ -3,12 +3,12 @@ import { COLORS } from "../theme/theme";
 
 export const useTheme = () => {
   const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
-  const theme = isDark ? COLORS.dark : COLORS.light;
+  const isDark = false;
+  const theme = COLORS.light;
 
   return {
     isDark,
-    theme,
+    theme: colorScheme,
     colors: theme,
   };
 };

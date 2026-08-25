@@ -26,7 +26,7 @@ module.exports = {
     './components/**/*.{js,jsx,ts,tsx}',
   ],
   presets: [require('nativewind/preset')],
-  darkMode: 'media', // Uses device color scheme automatically
+  darkMode: 'class', // Manual class mode (prevents automatic media dark mode)
   theme: {
     extend: {
       colors: {

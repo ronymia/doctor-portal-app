@@ -48,7 +48,7 @@ function RadioChip({
   useEffect(() => {
     Animated.spring(dotScale, {
       toValue: isSelected ? 1 : 0,
-      useNativeDriver: true,
+      useNativeDriver: false,
       speed: 20,
       bounciness: isSelected ? 12 : 0,
     }).start();
@@ -57,7 +57,7 @@ function RadioChip({
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
       toValue: 0.95,
-      useNativeDriver: true,
+      useNativeDriver: false,
       speed: 50,
       bounciness: 0,
     }).start();
@@ -66,7 +66,7 @@ function RadioChip({
   const handlePressOut = () => {
     Animated.spring(scaleAnim, {
       toValue: 1,
-      useNativeDriver: true,
+      useNativeDriver: false,
       speed: 50,
       bounciness: 6,
     }).start();

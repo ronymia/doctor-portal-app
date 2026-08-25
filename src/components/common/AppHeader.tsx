@@ -1,5 +1,6 @@
+import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-import { ChevronLeft } from "lucide-react-native";
+
 import React from "react";
 import { TouchableOpacity, useColorScheme, View } from "react-native";
 import AppText from "./AppText";
@@ -28,7 +29,7 @@ const AppHeader: React.FC<IAppHeaderProps> = ({
             className="w-8 h-8 rounded-full bg-brand-border dark:bg-dark-border justify-center items-center"
             onPress={() => router.back()}
           >
-            <ChevronLeft size={20} color={iconColor} />
+            <Feather name="chevron-left" size={20} color={iconColor} />
           </TouchableOpacity>
         )}
       </View>

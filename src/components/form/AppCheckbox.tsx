@@ -1,6 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
 import AppText from "@/src/components/common/AppText";
 import { useTheme } from "@/src/hooks/useTheme";
-import { Check } from "lucide-react-native";
+
 import { Controller, RegisterOptions } from "react-hook-form";
 import { TouchableOpacity, View } from "react-native";
 
@@ -40,7 +41,7 @@ export default function AppCheckbox({
                 backgroundColor: value ? primaryColor : "transparent",
               }}
             >
-              {value && <Check size={14} color="#FFFFFF" strokeWidth={3} />}
+              {value && <Feather name="check" size={14} color="#FFFFFF" />}
             </View>
             <AppText variant="body" className="flex-1">
               {label}

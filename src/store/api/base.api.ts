@@ -29,7 +29,7 @@ import type { IRtkApiError } from "@/src/api/types";
  *
  *   query: (id) => ({
  *     url: `/v1.0/appointments/${id}`,
- *     method: 'GET',
+ *     method: "GET',
  *   })
  *
  * FormData bodies (registerPatient, registerDoctor) are forwarded

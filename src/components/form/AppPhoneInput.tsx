@@ -1,6 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
 import AppText from "@/src/components/common/AppText";
 import { useTheme } from "@/src/hooks/useTheme";
-import { Phone } from "lucide-react-native";
+
 import { useState } from "react";
 import { Controller, RegisterOptions } from "react-hook-form";
 import { TextInput, TextInputProps, View } from "react-native";
@@ -60,7 +61,7 @@ export default function AppPhoneInput({
               style={{ backgroundColor: surfaceBg, borderColor }}
             >
               <View className="mr-2 justify-center items-center">
-                <Phone size={18} color={iconColor} />
+                <Feather name="phone" size={18} color={iconColor} />
               </View>
               <AppText
                 weight="medium"

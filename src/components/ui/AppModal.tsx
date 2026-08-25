@@ -1,10 +1,11 @@
+import Feather from '@expo/vector-icons/Feather';
 import AppText from "@/src/components/common/AppText";
-import { X } from "lucide-react-native";
+
 import React from "react";
 import {
   Modal as RNModal,
+  Pressable,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   useColorScheme,
   View,
 } from "react-native";
@@ -35,34 +36,32 @@ const AppModal: React.FC<IAppModalProps> = ({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <TouchableOpacity
+      <Pressable
         className="flex-1 bg-black/50 justify-center items-center px-5"
-        activeOpacity={1}
         onPress={onClose}
       >
-        <TouchableWithoutFeedback>
+        <Pressable
+          onPress={(e) => e.stopPropagation()}
+          className="w-full rounded-2xl max-h-[80%] overflow-hidden shadow-2xl"
+          style={{ backgroundColor: surfaceBg }}
+        >
+          {/* Header */}
           <View
-            className="w-full rounded-2xl max-h-[80%] overflow-hidden shadow-2xl"
-            style={{ backgroundColor: surfaceBg }}
+            className="flex-row items-center justify-between p-4 border-b"
+            style={{ borderBottomColor: borderColor }}
           >
-            {/* Header */}
-            <View
-              className="flex-row items-center justify-between p-4 border-b"
-              style={{ borderBottomColor: borderColor }}
-            >
-              <AppText weight="bold" style={{ fontSize: 16 }}>
-                {title || ""}
-              </AppText>
-              <TouchableOpacity onPress={onClose} className="p-1">
-                <X size={20} color={closeIconColor} />
-              </TouchableOpacity>
-            </View>
-
-            {/* Content */}
-            <View className="p-4">{children}</View>
+            <AppText weight="bold" style={{ fontSize: 16 }}>
+              {title || ""}
+            </AppText>
+            <TouchableOpacity onPress={onClose} className="p-1">
+              <Feather name="x" size={20} color={closeIconColor} />
+            </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
-      </TouchableOpacity>
+
+          {/* Content */}
+          <View className="p-4">{children}</View>
+        </Pressable>
+      </Pressable>
     </RNModal>
   );
 };

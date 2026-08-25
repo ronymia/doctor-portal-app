@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import colors from "./colors.json";
 
 export const COLORS = colors;
@@ -27,7 +28,6 @@ export const TYPOGRAPHY = {
     regular: 'System',
     medium: 'System',
     semibold: 'System',
-    bold: 'System',
   },
   fontSize: {
     xs: 11,
@@ -49,28 +49,45 @@ export const TYPOGRAPHY = {
   },
 };
 
-export const SHADOWS = {
-  sm: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+export const SHADOWS = Platform.select({
+  web: {
+    sm: {
+      boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+    },
+    md: {
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.12)",
+    },
+    lg: {
+      boxShadow: "0px 8px 12px rgba(0, 0, 0, 0.16)",
+    },
   },
-  md: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 4,
+  default: {
+    sm: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
+    },
+    md: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.12,
+      shadowRadius: 6,
+      elevation: 4,
+    },
+    lg: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.16,
+      shadowRadius: 12,
+      elevation: 8,
+    },
   },
-  lg: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.16,
-    shadowRadius: 12,
-    elevation: 8,
-  },
+}) as {
+  sm: any;
+  md: any;
+  lg: any;
 };
 
 export const SPRING_CONFIG = {

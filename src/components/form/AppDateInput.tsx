@@ -1,6 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
 import AppText from "@/src/components/common/AppText";
 import { useTheme } from "@/src/hooks/useTheme";
-import { Calendar, ChevronLeft, ChevronRight } from "lucide-react-native";
+
 import { useState } from "react";
 import { Controller, RegisterOptions } from "react-hook-form";
 import { Modal, TouchableOpacity, View } from "react-native";
@@ -123,7 +124,7 @@ export default function AppDateInput({
             >
               <View className="flex-row items-center">
                 <View className="mr-2 justify-center items-center">
-                  <Calendar size={18} color={calendarIconColor} />
+                  <Feather name="calendar" size={18} color={calendarIconColor} />
                 </View>
                 <AppText
                   className={
@@ -167,7 +168,7 @@ export default function AppDateInput({
                       className="w-10 h-10 rounded-full items-center justify-center border"
                       style={{ borderColor: borderColor }}
                     >
-                      <ChevronLeft size={20} color={colors.text} />
+                      <Feather name="chevron-left" size={20} color={colors.text} />
                     </TouchableOpacity>
 
                     <AppText weight="bold" style={{ fontSize: 18 }}>
@@ -180,7 +181,7 @@ export default function AppDateInput({
                       className="w-10 h-10 rounded-full items-center justify-center border"
                       style={{ borderColor: borderColor }}
                     >
-                      <ChevronRight size={20} color={colors.text} />
+                      <Feather name="chevron-right" size={20} color={colors.text} />
                     </TouchableOpacity>
                   </View>
 

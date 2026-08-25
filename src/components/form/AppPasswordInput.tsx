@@ -1,6 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
 import AppText from "@/src/components/common/AppText";
 import { useTheme } from "@/src/hooks/useTheme";
-import { Eye, EyeOff, Lock } from "lucide-react-native";
+
 import { useState } from "react";
 import { Controller, RegisterOptions } from "react-hook-form";
 import {
@@ -67,7 +68,7 @@ export default function AppPasswordInput({
               style={{ backgroundColor: surfaceBg, borderColor }}
             >
               <View className="mr-2 justify-center items-center">
-                <Lock size={18} color={iconColor} />
+                <Feather name="lock" size={18} color={iconColor} />
               </View>
               <TextInput
                 secureTextEntry={isSecure}
@@ -89,9 +90,9 @@ export default function AppPasswordInput({
                 className="p-1 justify-center items-center"
               >
                 {isSecure ? (
-                  <Eye size={18} color={toggleIconColor} />
+                  <Feather name="eye" size={18} color={toggleIconColor} />
                 ) : (
-                  <EyeOff size={18} color={toggleIconColor} />
+                  <Feather name="eye-off" size={18} color={toggleIconColor} />
                 )}
               </TouchableOpacity>
             </View>

@@ -16,7 +16,7 @@ When working in this repository, please strictly adhere to the following rules a
 - **Styling**: NativeWind (Tailwind CSS for React Native).
 - **State Management**: Redux Toolkit (RTK) & RTK Query for all API interactions.
 - **Forms**: `react-hook-form` paired with `@hookform/resolvers/zod` for validation.
-- **Icons**: `lucide-react-native`.
+- **Icons**: `react-native-vector-icons`.
 
 ## 3. Project Structure
 - `app/`: Contains Expo Router pages, layouts, and route definitions.

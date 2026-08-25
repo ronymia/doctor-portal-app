@@ -7,7 +7,7 @@ import { useState } from "react";
 /**
  * SHARED HOOK FOR ALL ADMIN SCREENS
  * Provides sidebar visibility, user info, role flags, pending count,
- * and logout — so each admin screen doesn't repeat this boilerplate.
+ * and logout — so each admin screen doesn"t repeat this boilerplate.
  */
 export function useAdminScreen() {
   const dispatch = useAppDispatch();

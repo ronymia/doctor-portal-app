@@ -1,5 +1,5 @@
 import React from "react";
-import { useHasPermission, useHasRole } from "@/hooks/useAuthGuards";
+import { useHasPermission, useHasRole } from "@/src/hooks/useAuthGuards";
 
 interface ICanProps {
   permission?: string | string[];

@@ -5,8 +5,8 @@
 //  the store can be injected without circular-import issues.
 // ─────────────────────────────────────────────────────────────
 
-import { create, AxiosInstance } from "axios";
 import { API_BASE_URL } from "@/src/constants";
+import { AxiosInstance, create } from "axios";
 
 /**
  * The single shared Axios instance used throughout the app.

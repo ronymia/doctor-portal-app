@@ -16,16 +16,13 @@ interface IAppTextProps extends TextProps {
 }
 
 const variantClasses: Record<NonNullable<IAppTextProps["variant"]>, string> = {
-  title: "text-[34px] leading-[40px] text-brand-text dark:text-dark-text",
-  subtitle: "text-[22px] leading-[28px] text-brand-text dark:text-dark-text",
-  body: "text-[15px] leading-[20px] text-brand-text dark:text-dark-text",
-  bodySecondary:
-    "text-[13px] leading-[18px] text-brand-text-secondary dark:text-dark-text-secondary",
-  caption:
-    "text-[11px] leading-[14px] text-brand-text-muted dark:text-dark-text-muted",
-  label:
-    "text-[13px] leading-[18px] text-brand-text-secondary dark:text-dark-text-secondary",
-  error: "text-[11px] leading-[14px] text-brand-error dark:text-dark-error",
+  title: "text-[34px] leading-[40px] text-brand-text",
+  subtitle: "text-[22px] leading-[28px] text-brand-text",
+  body: "text-[15px] leading-[20px] text-brand-text",
+  bodySecondary: "text-[13px] leading-[18px] text-brand-text-secondary",
+  caption: "text-[11px] leading-[14px] text-brand-text-muted",
+  label: "text-[13px] leading-[18px] text-brand-text-secondary",
+  error: "text-[11px] leading-[14px] text-brand-error",
 };
 
 const weightClasses: Record<NonNullable<IAppTextProps["weight"]>, string> = {

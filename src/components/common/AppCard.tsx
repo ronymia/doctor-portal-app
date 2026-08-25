@@ -2,26 +2,24 @@ import React from "react";
 import { View, ViewStyle } from "react-native";
 
 interface IAppCardProps {
-  children: React.ReactNode;
-  style?: ViewStyle;
-  padding?: number;
-  bordered?: boolean;
-  className?: string;
+  readonly children: React.ReactNode;
+  readonly style?: ViewStyle;
+  readonly padding?: number;
+  readonly bordered?: boolean;
+  readonly className?: string;
 }
 
-const AppCard: React.FC<IAppCardProps> = ({
+export default function AppCard({
   children,
   style,
   padding,
   bordered = true,
   className,
-}) => {
+}: IAppCardProps) {
   const baseClass = [
-    "rounded-md bg-white dark:bg-dark-surface",
+    "rounded-md bg-white",
     "shadow-sm",
-    bordered
-      ? "border border-brand-border dark:border-dark-border"
-      : "border-0",
+    bordered ? "border border-brand-border" : "border-0",
     className,
   ]
     .filter(Boolean)
@@ -40,6 +38,4 @@ const AppCard: React.FC<IAppCardProps> = ({
       {children}
     </View>
   );
-};
-
-export default AppCard;
+}

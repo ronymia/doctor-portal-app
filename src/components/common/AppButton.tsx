@@ -1,10 +1,10 @@
 import { useTheme } from "@/src/hooks/useTheme";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
-  Animated,
-  Pressable,
-  ViewStyle,
+    ActivityIndicator,
+    Animated,
+    Pressable,
+    ViewStyle,
 } from "react-native";
 import AppText from "./AppText";
 

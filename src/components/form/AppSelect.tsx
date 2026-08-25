@@ -99,10 +99,10 @@ export default function AppSelect({
                 }}
                 arrowIconStyle={{
                   tintColor: chevronColor,
-                }}
+                } as any}
                 tickIconStyle={{
                   tintColor: colors.primary,
-                }}
+                } as any}
                 selectedItemContainerStyle={{
                   backgroundColor: colors.primary + "15", // Light tint of primary color
                 }}
@@ -119,8 +119,8 @@ export default function AppSelect({
                     justifyContent: "center",
                     alignItems: "center",
                     zIndex: zIndex + 1,
+                    pointerEvents: "none",
                   }}
-                  pointerEvents="none"
                 >
                   {icon}
                 </View>

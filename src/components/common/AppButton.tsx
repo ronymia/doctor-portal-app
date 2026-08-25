@@ -33,7 +33,7 @@ export default function AppButton({
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
       toValue: 0.96,
-      useNativeDriver: true,
+      useNativeDriver: false,
       speed: 50,
       bounciness: 0,
     }).start();
@@ -42,7 +42,7 @@ export default function AppButton({
   const handlePressOut = () => {
     Animated.spring(scaleAnim, {
       toValue: 1,
-      useNativeDriver: true,
+      useNativeDriver: false,
       speed: 50,
       bounciness: 4,
     }).start();

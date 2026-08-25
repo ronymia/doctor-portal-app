@@ -1,8 +1,5 @@
-import {
-  Calendar as CalendarIcon,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react-native";
+
+import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
 import { Platform, Text, TouchableOpacity, View } from "react-native";
 
@@ -84,7 +81,7 @@ export default function DateRangePicker() {
           >
             08-12-2016 | 10-22-2018
           </Text>
-          <CalendarIcon color={colors.textWhite} size={18} />
+          <Feather name="calendar" color={colors.textWhite} size={18} />
         </TouchableOpacity>
       </View>
 
@@ -96,10 +93,6 @@ export default function DateRangePicker() {
             borderRadius: 8,
             padding: 24,
             flexDirection: Platform.OS === "web" ? "row" : "column", // Responsive row on web
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 10 },
-            shadowOpacity: 0.3,
-            shadowRadius: 20,
             elevation: 10,
             alignSelf: "center",
             width: "100%",
@@ -135,10 +128,10 @@ export default function DateRangePicker() {
               </Text>
               <View style={{ flexDirection: "row", gap: 12 }}>
                 <TouchableOpacity>
-                  <ChevronLeft color={colors.primaryTeal} size={20} />
+                  <Feather name="chevron-left" color={colors.primaryTeal} size={20} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <ChevronRight color={colors.primaryTeal} size={20} />
+                  <Feather name="chevron-right" color={colors.primaryTeal} size={20} />
                 </TouchableOpacity>
               </View>
             </View>

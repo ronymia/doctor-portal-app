@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Feather from "@expo/vector-icons/Feather";
 
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, Text } from "react-native";
 
 import AppButton from "@/src/components/common/AppButton";
 import AppDateInput from "@/src/components/form/AppDateInput";
@@ -83,7 +83,7 @@ export default function DoctorForm() {
       : undefined;
 
   // FORM HANDLERS
-  const { control, handleSubmit } = useForm<any>({
+  const { control, handleSubmit, setError, formState: { errors } } = useForm<any>({
     resolver: zodResolver(isEditMode ? updateDoctorSchema : doctorSchema),
     values: formValues as any,
     defaultValues: {
@@ -142,16 +142,14 @@ export default function DoctorForm() {
 
         const response = await createDoctor(formData).unwrap();
       }
+      
+      closeModal();
     } catch (err: any) {
       console.log(err);
-      // setModalConfig({
-      //   visible: true,
-      //   type: "danger",
-      //   title: "Error",
-      //   message:
-      //     err?.data?.message ||
-      //     `Failed to ${isEditMode ? "update" : "create"} doctor.`,
-      // });
+      setError("root.serverError", {
+        type: "server",
+        message: err?.data?.message || err?.message || `Failed to ${isEditMode ? "update" : "create"} doctor.`,
+      });
     }
   };
 
@@ -254,6 +252,12 @@ export default function DoctorForm() {
           label="Joining Date"
           placeholder="Select Joining Date"
         />
+
+        {errors.root?.serverError?.message && (
+          <Text className="text-red-500 mt-2 font-medium text-center">
+            {errors.root.serverError.message}
+          </Text>
+        )}
 
         <AppButton
           title={isEditMode ? "Update Doctor" : "Create Doctor"}

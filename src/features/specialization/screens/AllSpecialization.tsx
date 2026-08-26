@@ -11,10 +11,8 @@ import ConfirmationModal from "@/src/components/common/ConfirmationModal";
 import EmptyState from "@/src/components/common/EmptyState";
 import AppModal from "@/src/components/ui/AppModal";
 import { useTheme } from "@/src/hooks/useTheme";
-import {
-  useDeleteSpecializationMutation,
-  useGetSpecializationsQuery,
-} from "@/src/store/api";
+import useDeleteSpecializationMutation from "../hooks/mutations/useDeleteSpecializationMutation";
+import useGetSpecializationsQuery from "../hooks/queries/useGetSpecializationsQuery";
 import AdminScreenLayout from "../../../layouts/AdminScreenLayout";
 import SpecializationForm from "../components/SpecializationForm";
 

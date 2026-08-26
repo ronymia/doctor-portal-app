@@ -9,11 +9,9 @@ import AppButton from "@/src/components/common/AppButton";
 import ConfirmationModal from "@/src/components/common/ConfirmationModal";
 import AppInput from "@/src/components/form/AppInput";
 import { specializationSchema, TSpecializationFormFields } from "@/src/schemas";
-import {
-  useCreateSpecializationMutation,
-  useGetSpecializationsQuery,
-  useUpdateSpecializationMutation,
-} from "@/src/store/api";
+import useCreateSpecializationMutation from "../hooks/mutations/useCreateSpecializationMutation";
+import useUpdateSpecializationMutation from "../hooks/mutations/useUpdateSpecializationMutation";
+import useGetSpecializationsQuery from "../hooks/queries/useGetSpecializationsQuery";
 
 interface ISpecializationFormProps {
   readonly specializationId?: string;

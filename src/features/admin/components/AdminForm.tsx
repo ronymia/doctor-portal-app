@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Feather from "@expo/vector-icons/Feather";
 
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, Text } from "react-native";
 
 import AppButton from "@/src/components/common/AppButton";
 import AppDateInput from "@/src/components/form/AppDateInput";
@@ -24,7 +24,7 @@ import useGetAdminsQuery from "../hooks/queries/useGetAdminsQuery";
 
 export default function AdminForm() {
   const { modalConfig, setModalConfig, openModal, closeModal } = useAppModal();
-  const adminId = (modalConfig?.data as any)?.id;
+  const adminId = (modalConfig?.data as any)?.adminId || (modalConfig?.data as any)?.id;
   const isEditMode = !!adminId;
 
   // QUERIES & MUTATIONS
@@ -74,7 +74,7 @@ export default function AdminForm() {
       : undefined;
 
   // FORM HANDLERS
-  const { control, handleSubmit } = useForm<TAdminFormFields>({
+  const { control, handleSubmit, setError, formState: { errors } } = useForm<TAdminFormFields>({
     resolver: zodResolver(
       isEditMode ? updateAdminSchema : createAdminSchema,
     ) as any,
@@ -130,25 +130,15 @@ export default function AdminForm() {
         formData.append("data", JSON.stringify(createPayload));
 
         const response = await createAdmin(formData).unwrap();
-        // if (response && response.success) {
-        //   setModalConfig({
-        //     visible: true,
-        //     type: "success",
-        //     title: "Creation Successful",
-        //     message: "Admin created successfully!",
-        //   });
-        // }
       }
+      
+      closeModal();
     } catch (err: any) {
       console.log(err);
-      //   setModalConfig({
-      //     visible: true,
-      //     type: "danger",
-      //     title: "Error",
-      //     message:
-      //       err?.data?.message ||
-      //       `Failed to ${isEditMode ? "update" : "create"} admin.`,
-      //   });
+      setError("root.serverError", {
+        type: "server",
+        message: err?.data?.message || err?.message || `Failed to ${isEditMode ? "update" : "create"} admin.`,
+      });
     }
   };
 
@@ -234,6 +224,13 @@ export default function AdminForm() {
           label="Joining Date"
           placeholder="Select Joining Date"
         />
+
+        {errors.root?.serverError?.message && (
+          <Text className="text-red-500 mt-2 font-medium text-center">
+            {errors.root.serverError.message}
+          </Text>
+        )}
+
         <AppButton
           title={isEditMode ? "Update Admin" : "Create Admin"}
           onPress={handleSubmit(onSubmit)}

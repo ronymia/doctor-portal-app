@@ -13,11 +13,9 @@ import AppPasswordInput from "@/src/components/form/AppPasswordInput";
 import AppPhoneInput from "@/src/components/form/AppPhoneInput";
 import AppRadio from "@/src/components/form/AppRadio";
 import useAppModal from "@/src/hooks/useAppModal";
-import {
-  useCreateAdminMutation,
-  useGetAdminsQuery,
-  useUpdateAdminMutation,
-} from "@/src/store/api";
+import useCreateAdminMutation from "../hooks/mutations/useCreateAdminMutation";
+import useUpdateAdminMutation from "../hooks/mutations/useUpdateAdminMutation";
+import useGetAdminsQuery from "../hooks/queries/useGetAdminsQuery";
 
 // interface IAdminFormProps {
 //   readonly adminId?: string;
@@ -34,8 +32,8 @@ export default function AdminForm() {
     {},
     { skip: !isEditMode },
   );
-  const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
-  const [updateAdmin, { isLoading: isUpdating }] = useUpdateAdminMutation();
+  const { createAdmin, isLoading: isCreating } = useCreateAdminMutation();
+  const { updateAdmin, isLoading: isUpdating } = useUpdateAdminMutation();
 
   const adminToEdit = isEditMode
     ? (adminsResponse?.data || []).find((adm: any) => adm.id === adminId)

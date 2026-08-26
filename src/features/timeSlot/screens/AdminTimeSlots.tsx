@@ -10,10 +10,8 @@ import AppText from "@/src/components/common/AppText";
 import EmptyState from "@/src/components/common/EmptyState";
 import { useTheme } from "@/src/hooks/useTheme";
 import AdminScreenLayout from "@/src/layouts/AdminScreenLayout";
-import {
-  useCreateTimeSlotMutation,
-  useGetTimeSlotsQuery,
-} from "@/src/store/api";
+import useCreateTimeSlotMutation from "../hooks/mutations/useCreateTimeSlotMutation";
+import useGetTimeSlotsQuery from "../hooks/queries/useGetTimeSlotsQuery";
 
 // ADMIN TIME SLOTS — FULLY SELF-CONTAINED SCREEN
 export default function AdminTimeSlots() {

@@ -12,7 +12,8 @@ import EmptyState from "@/src/components/common/EmptyState";
 import { useAdminScreen } from "@/src/hooks/useAdminScreen";
 import useAppModal from "@/src/hooks/useAppModal";
 import AdminScreenLayout from "@/src/layouts/AdminScreenLayout";
-import { useDeleteAdminMutation, useGetAdminsQuery } from "@/src/store/api";
+import useDeleteAdminMutation from "../hooks/mutations/useDeleteAdminMutation";
+import useGetAdminsQuery from "../hooks/queries/useGetAdminsQuery";
 import { COLORS } from "@/src/theme/theme";
 
 // ADMIN LIST SCREEN
@@ -38,7 +39,7 @@ export default function AdminList() {
   } = useGetAdminsQuery({}, { skip: !isSuperAdmin });
   const allAdmins = adminsResponse?.data || [];
 
-  const [deleteAdmin] = useDeleteAdminMutation();
+  const { deleteAdmin } = useDeleteAdminMutation();
 
   // const [modalConfig, setModalConfig] = useState<{
   //   visible: boolean;

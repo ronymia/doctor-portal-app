@@ -6,7 +6,7 @@ import AppText from "@/src/components/common/AppText";
 import EmptyState from "@/src/components/common/EmptyState";
 import { useTheme } from "@/src/hooks/useTheme";
 import AdminScreenLayout from "@/src/layouts/AdminScreenLayout";
-import { useGetUsersQuery } from "@/src/store/api";
+import useGetUsersQuery from "../hooks/queries/useGetUsersQuery";
 
 // ADMIN PATIENTS — FULLY SELF-CONTAINED SCREEN
 export default function AdminPatients() {

@@ -8,7 +8,7 @@ export const useTheme = () => {
 
   return {
     isDark,
-    theme: colorScheme,
+    theme: theme,
     colors: theme,
   };
 };

@@ -9,14 +9,12 @@ import AppText from "@/src/components/common/AppText";
 import EmptyState from "@/src/components/common/EmptyState";
 import useAppModal from "@/src/hooks/useAppModal";
 import AdminScreenLayout from "@/src/layouts/AdminScreenLayout";
-import {
-    useApproveDoctorMutation,
-    useDeleteDoctorMutation,
-    useGetUsersQuery,
-    useRejectDoctorMutation,
-    useSuspendUserMutation,
-    useUnsuspendUserMutation,
-} from "@/src/store/api";
+import useApproveDoctorMutation from "../hooks/mutations/useApproveDoctorMutation";
+import useDeleteDoctorMutation from "../hooks/mutations/useDeleteDoctorMutation";
+import useRejectDoctorMutation from "../hooks/mutations/useRejectDoctorMutation";
+import useSuspendUserMutation from "../hooks/mutations/useSuspendUserMutation";
+import useUnsuspendUserMutation from "../hooks/mutations/useUnsuspendUserMutation";
+import useDoctorQuery from "../hooks/quries/useDoctorQuery";
 import { COLORS } from "@/src/theme/theme";
 
 // DOCTORS LIST SCREEN
@@ -30,18 +28,14 @@ export default function DoctorList() {
   const warningColor = isDark ? "#FBBF24" : "#F59E0B";
   const errorColor = isDark ? "#F87171" : "#EF4444";
 
-  const {
-    data: allUsersResponse,
-    isLoading,
-    refetch,
-  } = useGetUsersQuery({ role: "DOCTOR" });
+  const { data: allUsersResponse, isLoading, refetch } = useDoctorQuery();
   const doctors = allUsersResponse?.data || [];
 
-  const [approveDoctor] = useApproveDoctorMutation();
-  const [rejectDoctor] = useRejectDoctorMutation();
-  const [suspendUser] = useSuspendUserMutation();
-  const [unsuspendUser] = useUnsuspendUserMutation();
-  const [deleteDoctor] = useDeleteDoctorMutation();
+  const { approveDoctor } = useApproveDoctorMutation();
+  const { rejectDoctor } = useRejectDoctorMutation();
+  const { suspendUser } = useSuspendUserMutation();
+  const { unsuspendUser } = useUnsuspendUserMutation();
+  const { deleteDoctor } = useDeleteDoctorMutation();
   const { openModal, modalConfig } = useAppModal();
 
   // const [modalConfig, setModalConfig] = useState<{

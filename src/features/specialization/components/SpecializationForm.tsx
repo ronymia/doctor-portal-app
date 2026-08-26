@@ -1,12 +1,10 @@
-import Feather from '@expo/vector-icons/Feather';
+import Feather from "@expo/vector-icons/Feather";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
 import AppButton from "@/src/components/common/AppButton";
-import ConfirmationModal from "@/src/components/common/ConfirmationModal";
 import AppInput from "@/src/components/form/AppInput";
 import { specializationSchema, TSpecializationFormFields } from "@/src/schemas";
 import useCreateSpecializationMutation from "../hooks/mutations/useCreateSpecializationMutation";
@@ -37,26 +35,6 @@ export default function SpecializationForm({
     ? (specsResponse?.data || []).find((s: any) => s.id === specializationId)
     : null;
 
-  // MODAL STATE
-  const [modalConfig, setModalConfig] = useState<{
-    visible: boolean;
-    type: "success" | "danger";
-    title: string;
-    message: string;
-  }>({
-    visible: false,
-    type: "success",
-    title: "",
-    message: "",
-  });
-
-  const handleModalClose = () => {
-    setModalConfig((prev) => ({ ...prev, visible: false }));
-    if (modalConfig.type === "success") {
-      onSubmitSuccess();
-    }
-  };
-
   // DERIVE VALUES FOR EDIT MODE
   const formValues =
     isEditMode && specToEdit
@@ -67,7 +45,12 @@ export default function SpecializationForm({
       : undefined;
 
   // FORM HANDLERS
-  const { control, handleSubmit } = useForm<TSpecializationFormFields>({
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<TSpecializationFormFields>({
     resolver: zodResolver(specializationSchema),
     values: formValues as any,
     defaultValues: {
@@ -84,32 +67,18 @@ export default function SpecializationForm({
           id: specializationId,
           ...fields,
         }).unwrap();
-        if (response && response.success) {
-          setModalConfig({
-            visible: true,
-            type: "success",
-            title: "Update Successful",
-            message: "Specialization updated successfully!",
-          });
-        }
       } else {
         const response = await createSpecialization(fields).unwrap();
-        if (response && response.success) {
-          setModalConfig({
-            visible: true,
-            type: "success",
-            title: "Creation Successful",
-            message: "Specialization created successfully!",
-          });
-        }
       }
+
+      onSubmitSuccess();
     } catch (err: any) {
-      setModalConfig({
-        visible: true,
-        type: "danger",
-        title: "Error",
+      console.log(err);
+      setError("root.serverError", {
+        type: "server",
         message:
           err?.data?.message ||
+          err?.message ||
           `Failed to ${isEditMode ? "update" : "create"} specialization.`,
       });
     }
@@ -125,18 +94,7 @@ export default function SpecializationForm({
   }
 
   return (
-    <View className="flex-1">
-      <ConfirmationModal
-        visible={modalConfig.visible}
-        title={modalConfig.title}
-        message={modalConfig.message}
-        confirmText="OK"
-        cancelText={modalConfig.type === "success" ? "cancel" : ""}
-        type={modalConfig.type}
-        onConfirm={handleModalClose}
-        onCancel={handleModalClose}
-      />
-
+    <>
       <View className="py-2">
         <AppInput
           name="name"
@@ -154,6 +112,12 @@ export default function SpecializationForm({
         />
       </View>
 
+      {errors.root?.serverError?.message && (
+        <Text className="text-red-500 mt-2 font-medium text-center">
+          {errors.root.serverError.message}
+        </Text>
+      )}
+
       <View className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
         <AppButton
           title={isEditMode ? "Update Specialization" : "Create Specialization"}
@@ -162,6 +126,6 @@ export default function SpecializationForm({
           disabled={isCreating || isUpdating}
         />
       </View>
-    </View>
+    </>
   );
 }

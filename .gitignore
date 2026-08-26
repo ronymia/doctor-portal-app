@@ -17,7 +17,6 @@ expo-env.d.ts
 *.p12
 *.key
 *.mobileprovision
-.env.*
 *.env
 
 # Metro
@@ -53,3 +52,4 @@ app-example
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+config.bat
